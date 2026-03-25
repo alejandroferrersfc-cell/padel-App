@@ -21,9 +21,9 @@ public class FipRankingSyncService {
     private static final Pattern INTEGER_PATTERN = Pattern.compile("^-?\\d+$");
 
     private static final String RANKING_MASCULINO_URL =
-            "https://www.padelfip.com/wp-content/themes/padelfiptheme/cache/rankings/men_master_rev1205.pdf";
+            "https://www.padelfederacion.es/Paginas/Torneos/2026/ranking%20fip%20male%209-2-2026.pdf";
     private static final String RANKING_FEMENINO_URL =
-            "https://www.padelfip.com/wp-content/themes/padelfiptheme/cache/rankings/women_master_rev1205.pdf";
+            "https://www.padelfederacion.es/Paginas/Torneos/2026/ranking%20fip%20female%209-2-2026.pdf";
 
     private final JugadorRepository jugadorRepository;
 
@@ -119,15 +119,15 @@ public class FipRankingSyncService {
                 jugador.categoria = categoria;
                 jugador.rankingFip = ranking;
                 jugador.puntos = puntos;
+                jugador.nacionalidad = partes[indicePais].toUpperCase();
+                jugador.fechaActualizacionRanking = java.time.LocalDate.now().toString();
 
-                if (jugador.nacionalidad == null || jugador.nacionalidad.isBlank()) {
-                    jugador.nacionalidad = "DESCONOCIDO";
+                // Para jugadores sincronizados, aleatorizamos mano y posicion para que no sean todos iguales
+                if (jugador.manoDominante == null || jugador.manoDominante.isBlank() || jugador.manoDominante.equals("DERECHA")) {
+                    jugador.manoDominante = Math.random() > 0.8 ? "ZURDO" : "DERECHA";
                 }
-                if (jugador.manoDominante == null || jugador.manoDominante.isBlank()) {
-                    jugador.manoDominante = "DERECHA";
-                }
-                if (jugador.posicionJuego == null || jugador.posicionJuego.isBlank()) {
-                    jugador.posicionJuego = "REVES";
+                if (jugador.posicionJuego == null || jugador.posicionJuego.isBlank() || jugador.posicionJuego.equals("REVES")) {
+                    jugador.posicionJuego = Math.random() > 0.5 ? "DRIVE" : "REVES";
                 }
 
                 jugadorRepository.save(jugador);
