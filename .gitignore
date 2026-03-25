@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### JDK ###
+**/openJdk-25/
+
+### Python ###
+.venv/
+__pycache__/
+*.pyc
