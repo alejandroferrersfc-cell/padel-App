@@ -24,9 +24,9 @@ public class JugadorController {
 
     @GetMapping("/api/jugadores")
     public List<JugadorEntity> getJugadores(
-            @RequestParam(required = false) String categoria,
-            @RequestParam(required = false) String nacionalidad,
-            @RequestParam(required = false) Integer limit) {
+            @RequestParam(name = "categoria", required = false) String categoria,
+            @RequestParam(name = "nacionalidad", required = false) String nacionalidad,
+            @RequestParam(name = "limit", required = false) Integer limit) {
 
         boolean tieneCategoria = categoria != null && !categoria.isBlank();
         boolean tieneNacionalidad = nacionalidad != null && !nacionalidad.isBlank();

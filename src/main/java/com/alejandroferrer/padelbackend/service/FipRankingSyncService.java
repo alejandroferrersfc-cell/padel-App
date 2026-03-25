@@ -83,8 +83,14 @@ public class FipRankingSyncService {
                 if (ranking <= 0) {
                     continue;
                 }
+                
+                int puntos = extraerPuntos(partes, indicePais);
 
-                int inicioNombre = esEntero(partes[0]) ? 1 : 0;
+                int inicioNombre = 0;
+                while (inicioNombre < indicePais && esEntero(partes[inicioNombre])) {
+                    inicioNombre++;
+                }
+
                 if (inicioNombre >= indicePais) {
                     continue;
                 }
@@ -110,6 +116,7 @@ public class FipRankingSyncService {
                 jugador.nombreCompleto = nombreCompleto;
                 jugador.categoria = categoria;
                 jugador.rankingFip = ranking;
+                jugador.puntos = puntos;
 
                 if (jugador.nacionalidad == null || jugador.nacionalidad.isBlank()) {
                     jugador.nacionalidad = "DESCONOCIDO";
@@ -154,6 +161,16 @@ public class FipRankingSyncService {
     }
 
     private boolean esEntero(String valor) {
-        return INTEGER_PATTERN.matcher(valor).matches();
+        return INTEGER_PATTERN.matcher(valor.replace(".", "").replace(",", "")).matches();
+    }
+    
+    private int extraerPuntos(String[] partes, int indicePais) {
+        if (indicePais + 1 < partes.length) {
+            String puntosStr = partes[indicePais + 1].replace(".", "").replace(",", "");
+            if (esEntero(puntosStr)) {
+                return Integer.parseInt(puntosStr);
+            }
+        }
+        return 0;
     }
 }
