@@ -1,6 +1,6 @@
 # Desarrollo de Proyecto de Pádel
 
-Una aplicación web full-stack para la gestión de un club de pádel y actividades relacionadas. Este proyecto sirve como prototipo funcional mínimo que integra un backend robusto con un frontend interactivo.
+Una aplicación web full-stack para la gestión de una plataforma para los amantes del padel. Este proyecto sirve como prototipo funcional mínimo que integra un backend robusto con un frontend interactivo.
 
 ## Tecnologías Utilizadas
 - **Backend**: Java 17, Spring Boot (Web, Data JPA), Maven
