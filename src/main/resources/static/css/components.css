@@ -1,0 +1,256 @@
+/* Components CSS */
+
+/* --- Ranking Section --- */
+.ranking-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.player-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-glass);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.player-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 210, 255, 0.15);
+    border-color: rgba(0, 210, 255, 0.3);
+}
+
+.player-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+}
+
+.player-rank {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary);
+    opacity: 0.8;
+}
+
+.player-info h3 {
+    font-size: 1.25rem;
+    margin-top: 0.5rem;
+    color: var(--text-primary);
+}
+
+.player-stats {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-sec);
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+/* --- Wordle Section --- */
+.wordle-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.wordle-board {
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    gap: 0.5rem;
+}
+
+.wordle-row {
+    display: grid;
+    /* Columns will be set by JS depending on word length, default to 5 */
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+}
+
+.wordle-cell {
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--border-glass);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: white;
+    transition: var(--transition);
+}
+
+.wordle-cell.filled {
+    border-color: var(--text-sec);
+    animation: popIn 0.1s;
+}
+
+.wordle-cell.correct { background-color: var(--green-wordle); border-color: var(--green-wordle); }
+.wordle-cell.present { background-color: var(--yellow-wordle); border-color: var(--yellow-wordle); }
+.wordle-cell.absent { background-color: var(--gray-wordle); border-color: var(--gray-wordle); }
+
+@keyframes popIn {
+    0% { transform: scale(0.8); }
+    100% { transform: scale(1); }
+}
+
+.wordle-keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.keyboard-row {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+.key {
+    background: var(--text-sec);
+    color: var(--bg-base);
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    height: 50px;
+    padding: 0 12px;
+    cursor: pointer;
+    transition: var(--transition);
+    text-transform: uppercase;
+}
+.key.large { padding: 0 16px; font-size: 0.85rem; }
+.key:hover { background: white; }
+.key.correct { background: var(--green-wordle); color: white; }
+.key.present { background: var(--yellow-wordle); color: white; }
+.key.absent { background: var(--gray-wordle); color: white; opacity: 0.5; }
+
+
+/* --- Equipment / Wishlist --- */
+.equipment-showcase {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    padding: 2rem;
+}
+
+.wishlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.wishlist-item {
+    background: var(--bg-surface);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid var(--border-glass);
+}
+.wishlist-item img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+/* --- Live Tournaments --- */
+.live-matches-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.match-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.match-prediction {
+    font-size: 0.85rem;
+    background: var(--bg-glass);
+    padding: 0.5rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+    display: inline-block;
+    color: var(--primary);
+}
+
+/* --- Booking --- */
+.booking-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.club-card {
+    background: var(--bg-surface);
+    padding: 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- Hotspots for Equipment --- */
+.hotspot {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--bg-base);
+    cursor: pointer;
+    box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7);
+    animation: pulse 2s infinite;
+    transform: translate(-50%, -50%);
+}
+
+.hotspot:hover {
+    background: white;
+}
+
+.hotspot-tooltip {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-surface);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition);
+    border: 1px solid var(--border-glass);
+    backdrop-filter: blur(10px);
+}
+
+.hotspot:hover .hotspot-tooltip {
+    opacity: 1;
+    bottom: 45px;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(0, 210, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); }
+}

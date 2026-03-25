@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Padel Pro App</title>
+    <!-- Modern Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-table-tennis-paddle-ball"></i>
+                <span>PadelPro</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#ranking" class="active" data-section="ranking"><i class="fa-solid fa-ranking-star"></i> Ranking</a></li>
+                <li><a href="#wordle" data-section="wordle"><i class="fa-solid fa-gamepad"></i> Padel Wordle</a></li>
+                <li><a href="#equipment" data-section="equipment"><i class="fa-solid fa-shirt"></i> Equipamiento</a></li>
+                <li><a href="#wishlist" data-section="wishlist"><i class="fa-solid fa-heart"></i> Mi Wishlist</a></li>
+                <li><a href="#live" data-section="live"><i class="fa-solid fa-trophy"></i> En Directo</a></li>
+                <li><a href="#booking" data-section="booking"><i class="fa-solid fa-location-dot"></i> Reservar Pista</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+            <!-- Section 1: Ranking -->
+            <section id="ranking" class="page-section active">
+                <header class="section-header">
+                    <h1>Ranking Mundial</h1>
+                    <p>Descubre a los mejores jugadores del mundo.</p>
+                </header>
+                <div class="filters-glass">
+                    <div class="filter-group">
+                        <label>Nacionalidad</label>
+                        <select id="filter-nationality">
+                            <option value="all">Todas</option>
+                            <option value="es">España</option>
+                            <option value="ar">Argentina</option>
+                            <option value="br">Brasil</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Mano Dominante</label>
+                        <select id="filter-hand">
+                            <option value="all">Cualquiera</option>
+                            <option value="right">Diestro</option>
+                            <option value="left">Zurdo</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Posición en Pista</label>
+                        <select id="filter-side">
+                            <option value="all">Cualquiera</option>
+                            <option value="reves">Revés</option>
+                            <option value="drive">Drive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="ranking-grid" id="ranking-container">
+                    <!-- Cards will be injected by JS -->
+                </div>
+            </section>
+
+            <!-- Section 2: Padel Wordle -->
+            <section id="wordle" class="page-section">
+                <header class="section-header">
+                    <h1>Padel Wordle Diario</h1>
+                    <p>Adivina el apellido de un jugador del Top 20.</p>
+                </header>
+                <div class="wordle-container">
+                    <div id="wordle-board" class="wordle-board"></div>
+                    <div id="wordle-keyboard" class="wordle-keyboard"></div>
+                </div>
+            </section>
+
+            <!-- Section 3: Equipamiento -->
+            <section id="equipment" class="page-section">
+                <header class="section-header">
+                    <h1>Equipamiento Profesional</h1>
+                    <p>Encuentra qué llevan los profesionales y añádelo a tu lista de deseos.</p>
+                </header>
+                <div class="equipment-showcase" id="equipment-container">
+                    <!-- Photos with interactive points logic -->
+                </div>
+            </section>
+
+            <!-- Section 4: Wishlist -->
+            <section id="wishlist" class="page-section">
+                <header class="section-header">
+                    <h1>Mi Lista de Deseos</h1>
+                    <p>Tus prendas de equipamiento guardadas.</p>
+                </header>
+                <div class="wishlist-grid" id="wishlist-container">
+                    <!-- Wishlist items injected here -->
+                </div>
+            </section>
+
+            <!-- Section 5: En Directo -->
+            <section id="live" class="page-section">
+                <header class="section-header">
+                    <h1>Torneos en Directo</h1>
+                    <p>Marcadores reales vs Predecidos por Ranking.</p>
+                </header>
+                <div class="live-matches-grid" id="live-matches-container">
+                    <!-- Matches injected here -->
+                </div>
+            </section>
+
+            <!-- Section 6: Reservar Pista -->
+            <section id="booking" class="page-section">
+                <header class="section-header">
+                    <h1>Reservar Pista</h1>
+                    <p>Encuentra clubs a menos de 50km de tu ubicación actual.</p>
+                </header>
+                <div class="booking-container">
+                    <button id="btn-locate" class="btn-primary"><i class="fa-solid fa-location-crosshairs"></i> Compartir mi ubicación</button>
+                    <div class="clubs-list" id="clubs-container">
+                        <!-- Clubs injected here -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/ranking.js"></script>
+    <script src="js/wordle.js"></script>
+    <script src="js/equipment.js"></script>
+    <script src="js/wishlist.js"></script>
+    <script src="js/live.js"></script>
+    <script src="js/booking.js"></script>
+</body>
+</html>
