@@ -43,7 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        players.forEach(player => {
+        // OPTIMIZATION: Render max 100 players to prevent browser freeze
+        const playersToRender = players.slice(0, 100);
+        const fragment = document.createDocumentFragment();
+
+        playersToRender.forEach(player => {
             const card = document.createElement('div');
             card.className = 'player-card';
             card.innerHTML = `
@@ -58,8 +62,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             `;
-            container.appendChild(card);
+            fragment.appendChild(card);
         });
+        
+        container.appendChild(fragment);
+        
+        if (players.length > 100) {
+            const msg = document.createElement('p');
+            msg.style.cssText = 'color: var(--text-sec); text-align: center; width: 100%; margin-top: 1rem; grid-column: 1 / -1;';
+            msg.innerText = `Mostrando top 100 de ${players.length} jugadores filtrados.`;
+            container.appendChild(msg);
+        }
     }
 
     function applyFilters() {
