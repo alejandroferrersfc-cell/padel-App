@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 id: p.rankingFip, // Usar posición que devuelve el backend
                 originalId: p.idJugador,
                 name: p.nombreCompleto,
-                nationality: p.nacionalidad.toLowerCase(),
+                nationality: p.nacionalidad.toUpperCase(),
                 hand: p.manoDominante === 'DERECHA' || p.manoDominante === 'right' ? 'right' : 'left',
                 side: p.posicionJuego === 'REVES' || p.posicionJuego === 'reves' ? 'reves' : 'drive',
                 points: p.puntos,

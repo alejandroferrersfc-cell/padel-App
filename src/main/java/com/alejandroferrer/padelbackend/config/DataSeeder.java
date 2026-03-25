@@ -30,28 +30,28 @@ public class DataSeeder implements CommandLineRunner {
 
         List<JugadorEntity> jugadoresIniciales = List.of(
             // MASCULINO
-            crearJugador("Arturo Coello", "es", "ZURDO", "DRIVE", 1, 14500, "MASCULINO", fechaActual),
-            crearJugador("Agustín Tapia", "ar", "DERECHA", "REVES", 2, 14200, "MASCULINO", fechaActual),
-            crearJugador("Alejandro Galán", "es", "DERECHA", "REVES", 3, 13800, "MASCULINO", fechaActual),
-            crearJugador("Federico Chingotto", "ar", "DERECHA", "DRIVE", 4, 13500, "MASCULINO", fechaActual),
-            crearJugador("Martín Di Nenno", "ar", "DERECHA", "DRIVE", 5, 11000, "MASCULINO", fechaActual),
-            crearJugador("Franco Stupaczuk", "ar", "DERECHA", "REVES", 6, 10800, "MASCULINO", fechaActual),
-            crearJugador("Paquito Navarro", "es", "DERECHA", "REVES", 7, 9500, "MASCULINO", fechaActual),
-            crearJugador("Juan Lebrón", "es", "DERECHA", "DRIVE", 8, 9200, "MASCULINO", fechaActual),
-            crearJugador("Pablo Lima", "br", "ZURDO", "DRIVE", 9, 8000, "MASCULINO", fechaActual),
-            crearJugador("Fernando Belasteguín", "ar", "DERECHA", "REVES", 10, 7500, "MASCULINO", fechaActual),
-            crearJugador("Coki Nieto", "es", "ZURDO", "DRIVE", 11, 6000, "MASCULINO", fechaActual),
-            crearJugador("Jon Sanz", "es", "ZURDO", "DRIVE", 12, 5800, "MASCULINO", fechaActual),
+            crearJugador("Arturo Coello", "ESP", "ZURDO", "DRIVE", 1, 14500, "MASCULINO", fechaActual),
+            crearJugador("Agustín Tapia", "ARG", "DERECHA", "REVES", 2, 14200, "MASCULINO", fechaActual),
+            crearJugador("Alejandro Galán", "ESP", "DERECHA", "REVES", 3, 13800, "MASCULINO", fechaActual),
+            crearJugador("Federico Chingotto", "ARG", "DERECHA", "DRIVE", 4, 13500, "MASCULINO", fechaActual),
+            crearJugador("Martín Di Nenno", "ARG", "DERECHA", "DRIVE", 5, 11000, "MASCULINO", fechaActual),
+            crearJugador("Franco Stupaczuk", "ARG", "DERECHA", "REVES", 6, 10800, "MASCULINO", fechaActual),
+            crearJugador("Paquito Navarro", "ESP", "DERECHA", "REVES", 7, 9500, "MASCULINO", fechaActual),
+            crearJugador("Juan Lebrón", "ESP", "DERECHA", "DRIVE", 8, 9200, "MASCULINO", fechaActual),
+            crearJugador("Pablo Lima", "BRA", "ZURDO", "DRIVE", 9, 8000, "MASCULINO", fechaActual),
+            crearJugador("Fernando Belasteguín", "ARG", "DERECHA", "REVES", 10, 7500, "MASCULINO", fechaActual),
+            crearJugador("Coki Nieto", "ESP", "ZURDO", "DRIVE", 11, 6000, "MASCULINO", fechaActual),
+            crearJugador("Jon Sanz", "ESP", "ZURDO", "DRIVE", 12, 5800, "MASCULINO", fechaActual),
             
             // FEMENINO
-            crearJugador("Paula Josemaría", "es", "ZURDO", "DRIVE", 1, 15000, "FEMENINO", fechaActual),
-            crearJugador("Ariana Sánchez", "es", "DERECHA", "REVES", 2, 14800, "FEMENINO", fechaActual),
-            crearJugador("Gemma Triay", "es", "DERECHA", "REVES", 3, 13500, "FEMENINO", fechaActual),
-            crearJugador("Beatriz González", "es", "DERECHA", "REVES", 4, 12000, "FEMENINO", fechaActual),
-            crearJugador("Delfina Brea", "ar", "DERECHA", "DRIVE", 5, 11800, "FEMENINO", fechaActual),
-            crearJugador("Marta Ortega", "es", "DERECHA", "DRIVE", 6, 9500, "FEMENINO", fechaActual),
-            crearJugador("Alejandra Salazar", "es", "DERECHA", "DRIVE", 7, 8500, "FEMENINO", fechaActual),
-            crearJugador("Jessica Castelló", "es", "DERECHA", "REVES", 8, 7000, "FEMENINO", fechaActual)
+            crearJugador("Paula Josemaría", "ESP", "ZURDO", "DRIVE", 1, 15000, "FEMENINO", fechaActual),
+            crearJugador("Ariana Sánchez", "ESP", "DERECHA", "REVES", 2, 14800, "FEMENINO", fechaActual),
+            crearJugador("Gemma Triay", "ESP", "DERECHA", "REVES", 3, 13500, "FEMENINO", fechaActual),
+            crearJugador("Beatriz González", "ESP", "DERECHA", "REVES", 4, 12000, "FEMENINO", fechaActual),
+            crearJugador("Delfina Brea", "ARG", "DERECHA", "DRIVE", 5, 11800, "FEMENINO", fechaActual),
+            crearJugador("Marta Ortega", "ESP", "DERECHA", "DRIVE", 6, 9500, "FEMENINO", fechaActual),
+            crearJugador("Alejandra Salazar", "ESP", "DERECHA", "DRIVE", 7, 8500, "FEMENINO", fechaActual),
+            crearJugador("Jessica Castelló", "ESP", "DERECHA", "REVES", 8, 7000, "FEMENINO", fechaActual)
         );
 
         jugadorRepository.saveAll(jugadoresIniciales);
