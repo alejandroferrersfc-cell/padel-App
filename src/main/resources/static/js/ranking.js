@@ -3,7 +3,7 @@ let playersData = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('ranking-container');
-    const filterGender = document.getElementById('filter-category');
+    const filterGender = document.getElementById('filter-gender');
     const filterNationality = document.getElementById('filter-nationality');
     const filterHand = document.getElementById('filter-hand');
     const filterSide = document.getElementById('filter-side');
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (container) {
             container.innerHTML = '<div style="text-align: center; width: 100%; padding: 2rem;"><i class="fa-solid fa-spinner fa-spin fa-2x" style="color: var(--primary);"></i><p style="margin-top: 1rem; color: var(--text-sec);">Cargando jugadores...</p></div>';
         }
-        fetch('/api/jugadores')
+        fetch('http://localhost:8080/api/jugadores')
             .then(response => response.json())
             .then(data => {
                 playersData = data.map((p, index) => ({
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderPlayers(players) {
         if (!container) return;
         container.innerHTML = '';
-        
+
         if (players.length === 0) {
             container.innerHTML = '<p style="color:var(--text-sec); text-align: center; width: 100%;">No se encontraron jugadores con esos filtros.</p>';
             return;
@@ -64,9 +64,9 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             fragment.appendChild(card);
         });
-        
+
         container.appendChild(fragment);
-        
+
         if (players.length > 400) {
             const msg = document.createElement('p');
             msg.style.cssText = 'color: var(--text-sec); text-align: center; width: 100%; margin-top: 1rem; grid-column: 1 / -1;';
@@ -83,7 +83,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const side = filterSide.value;
 
         const filtered = playersData.filter(p => {
-            const matchGender = gender === 'all' || p.gender === gender.toUpperCase();
+            const genderValue = gender.toLowerCase();
+
+            const matchGender =
+                genderValue === 'all' ||
+                genderValue === 'ambas' ||
+                p.gender === gender.toUpperCase();
             const matchNat = nat === 'all' || p.nationality === nat;
             const matchHand = hand === 'all' || p.hand === hand;
             const matchSide = side === 'all' || p.side === side;
@@ -113,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const response = await fetch(endpoint);
                 if (response.ok) {
                     const result = await response.json();
-                    fetchPlayers(); 
+                    fetchPlayers();
                     alert(`¡Sincronización completada! Se actualizaron ${result.actualizados} jugadores.`);
                 } else {
                     alert('Error al sincronizar con el FIP. Revisa el backend.');
@@ -128,10 +133,10 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         if (btnMasculino) {
-            btnMasculino.addEventListener('click', () => handleSync(btnMasculino, '/api/admin/sync-ranking-masculino'));
+            btnMasculino.addEventListener('click', () => handleSync(btnMasculino, 'http://localhost:8080/api/admin/sync-ranking-masculino'));
         }
         if (btnFemenino) {
-            btnFemenino.addEventListener('click', () => handleSync(btnFemenino, '/api/admin/sync-ranking-femenino'));
+            btnFemenino.addEventListener('click', () => handleSync(btnFemenino, 'http://localhost:8080/api/admin/sync-ranking-femenino'));
         }
     }
 

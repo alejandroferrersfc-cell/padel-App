@@ -2,8 +2,6 @@ package com.alejandroferrer.padelbackend.controller;
 
 import java.util.List;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,17 +28,17 @@ public class JugadorController {
 
         boolean tieneCategoria = categoria != null && !categoria.isBlank();
         boolean tieneNacionalidad = nacionalidad != null && !nacionalidad.isBlank();
-        Pageable pageable = limit != null && limit > 0 ? PageRequest.of(0, limit) : Pageable.unpaged();
+        
 
         if (tieneCategoria && tieneNacionalidad) {
-            return jugadorRepository.findByCategoriaAndNacionalidadIgnoreCaseOrderByRankingFipAsc(categoria, nacionalidad, pageable);
+            return jugadorRepository.findByCategoriaAndNacionalidadIgnoreCaseOrderByRankingFipAsc(categoria, nacionalidad);
         }
         if (tieneCategoria) {
-            return jugadorRepository.findByCategoriaOrderByRankingFipAsc(categoria, pageable);
+            return jugadorRepository.findByCategoriaOrderByRankingFipAsc(categoria);
         }
         if (tieneNacionalidad) {
-            return jugadorRepository.findByNacionalidadIgnoreCaseOrderByRankingFipAsc(nacionalidad, pageable);
+            return jugadorRepository.findByNacionalidadIgnoreCaseOrderByRankingFipAsc(nacionalidad );
         }
-        return jugadorRepository.findAllByOrderByRankingFipAsc(pageable);
+        return jugadorRepository.findAllByOrderByRankingFipAsc();
     }
 }
