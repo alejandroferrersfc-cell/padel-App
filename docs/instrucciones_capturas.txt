@@ -1,0 +1,6 @@
+Coloca tus tres capturas de pantalla de la aplicación ejecutándose en esta carpeta.
+    - La aplicación ejecutándose
+    - La funcionalidad principal operativa
+    - La interfaz de usuario
+    
+    Asegúrate de nombrarlas algo como captura1.jpg, captura2.jpg, etc.
