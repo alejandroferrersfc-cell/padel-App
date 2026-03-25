@@ -132,6 +132,9 @@ public class FipRankingSyncService {
 
                 jugadorRepository.save(jugador);
                 actualizados++;
+                if (actualizados >= 400) {
+                    break;
+                }
             } catch (NumberFormatException ignored) {
                 // La linea no representa una entrada valida de ranking.
             }

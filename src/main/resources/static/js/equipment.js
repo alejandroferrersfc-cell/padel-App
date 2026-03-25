@@ -1,8 +1,8 @@
 // js/equipment.js
 const equipmentData = [
-    { id: 'eq1', name: "Pala Bullpadel Vertex 04", price: "280€", img: "https://via.placeholder.com/150?text=Vertex+04", link: "https://www.bullpadel.com", top: "25%", left: "75%" },
-    { id: 'eq2', name: "Camiseta Oficial Tapia", price: "45€", img: "https://via.placeholder.com/150?text=Camiseta", link: "https://www.noxsport.es", top: "45%", left: "48%" },
-    { id: 'eq3', name: "Zapatillas Asics Gel", price: "120€", img: "https://via.placeholder.com/150?text=Asics", link: "https://www.asics.com", top: "85%", left: "55%" }
+    { id: 'eq1', name: "Pala Bullpadel Vertex 04", price: "280€", img: "https://placehold.co/150?text=Vertex+04", link: "https://www.bullpadel.com", top: "25%", left: "75%" },
+    { id: 'eq2', name: "Camiseta Oficial Tapia", price: "45€", img: "https://placehold.co/150?text=Camiseta", link: "https://www.noxsport.es", top: "45%", left: "48%" },
+    { id: 'eq3', name: "Zapatillas Asics Gel", price: "120€", img: "https://placehold.co/150?text=Asics", link: "https://www.asics.com", top: "85%", left: "55%" }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {

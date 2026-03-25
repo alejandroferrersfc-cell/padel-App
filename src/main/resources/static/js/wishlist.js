@@ -2,9 +2,9 @@
 
 // Duplicating the data dictionary for easy lookup 
 const SHOPPING_ITEMS = [
-    { id: 'eq1', name: "Pala Bullpadel Vertex 04", price: "280€", img: "https://via.placeholder.com/150?text=Vertex+04", link: "https://www.bullpadel.com" },
-    { id: 'eq2', name: "Camiseta Oficial Tapia", price: "45€", img: "https://via.placeholder.com/150?text=Camiseta", link: "https://www.noxsport.es" },
-    { id: 'eq3', name: "Zapatillas Asics Gel", price: "120€", img: "https://via.placeholder.com/150?text=Asics", link: "https://www.asics.com" }
+    { id: 'eq1', name: "Pala Bullpadel Vertex 04", price: "280€", img: "https://placehold.co/150?text=Vertex+04", link: "https://www.bullpadel.com" },
+    { id: 'eq2', name: "Camiseta Oficial Tapia", price: "45€", img: "https://placehold.co/150?text=Camiseta", link: "https://www.noxsport.es" },
+    { id: 'eq3', name: "Zapatillas Asics Gel", price: "120€", img: "https://placehold.co/150?text=Asics", link: "https://www.asics.com" }
 ];
 
 window.addToWishlist = function(id) {
