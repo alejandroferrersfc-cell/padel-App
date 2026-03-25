@@ -32,6 +32,10 @@ public class JugadorEntity {
     public String fechaActualizacionRanking;
     @Column(name = "categoria")
     public String categoria;
+    
     @Column(name = "posicion_juego")
     public String posicionJuego;
+    
+    @Column(name = "puntos")
+    public int puntos;
 }

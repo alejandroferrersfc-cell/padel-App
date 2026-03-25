@@ -1,28 +1,35 @@
-// MOCK PADEL PLAYERS DATA
-// In a real app, this would be fetched from the Spring Boot backend
-const playersData = [
-    { id: 1, name: "Arturo Coello", nationality: "es", hand: "left", side: "drive", points: 14500 },
-    { id: 2, name: "Agustín Tapia", nationality: "ar", hand: "right", side: "reves", points: 14200 },
-    { id: 3, name: "Alejandro Galán", nationality: "es", hand: "right", side: "reves", points: 13800 },
-    { id: 4, name: "Federico Chingotto", nationality: "ar", hand: "right", side: "drive", points: 13500 },
-    { id: 5, name: "Martín Di Nenno", nationality: "ar", hand: "right", side: "drive", points: 11000 },
-    { id: 6, name: "Franco Stupaczuk", nationality: "ar", hand: "right", side: "reves", points: 10800 },
-    { id: 7, name: "Paquito Navarro", nationality: "es", hand: "right", side: "reves", points: 9500 },
-    { id: 8, name: "Juan Lebrón", nationality: "es", hand: "right", side: "drive", points: 9200 },
-    { id: 9, name: "Pablo Lima", nationality: "br", hand: "left", side: "drive", points: 8000 },
-    { id: 10, name: "Fernando Belasteguín", nationality: "ar", hand: "right", side: "reves", points: 7500 },
-    { id: 11, name: "Coki Nieto", nationality: "es", hand: "left", side: "drive", points: 6000 },
-    { id: 12, name: "Jon Sanz", nationality: "es", hand: "left", side: "drive", points: 5800 }
-];
+// Backend connection
+let playersData = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('ranking-container');
+    const filterGender = document.getElementById('filter-gender');
     const filterNationality = document.getElementById('filter-nationality');
     const filterHand = document.getElementById('filter-hand');
     const filterSide = document.getElementById('filter-side');
 
-    // Make player data globally available so other scripts (Wordle, Live) can use it
-    window.PADEL_PLAYERS = playersData;
+    // Fetch players from backend
+    fetch('/api/jugadores')
+        .then(response => response.json())
+        .then(data => {
+            // Map backend data to frontend format
+            playersData = data.map((p, index) => ({
+                id: p.rankingFip, // Usar posición que devuelve el backend
+                originalId: p.idJugador,
+                name: p.nombreCompleto,
+                nationality: p.nacionalidad.toLowerCase(),
+                hand: p.manoDominante === 'DERECHA' || p.manoDominante === 'right' ? 'right' : 'left',
+                side: p.posicionJuego === 'REVES' || p.posicionJuego === 'reves' ? 'reves' : 'drive',
+                points: p.puntos,
+                gender: p.categoria
+            }));
+            window.PADEL_PLAYERS = playersData;
+            applyFilters();
+        })
+        .catch(error => {
+            console.error('Error fetching players:', error);
+            container.innerHTML = '<p style="color:var(--text-sec)">Error al cargar los jugadores.</p>';
+        });
 
     function renderPlayers(players) {
         if (!container) return;
@@ -53,26 +60,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function applyFilters() {
+        if (!filterNationality || !filterHand || !filterSide || !filterGender) return;
+        const gender = filterGender.value;
         const nat = filterNationality.value;
         const hand = filterHand.value;
         const side = filterSide.value;
 
         const filtered = playersData.filter(p => {
+            const matchGender = gender === 'all' || p.gender === gender;
             const matchNat = nat === 'all' || p.nationality === nat;
             const matchHand = hand === 'all' || p.hand === hand;
             const matchSide = side === 'all' || p.side === side;
-            return matchNat && matchHand && matchSide;
+            return matchGender && matchNat && matchHand && matchSide;
         });
 
         renderPlayers(filtered);
     }
 
-    if (filterNationality && filterHand && filterSide) {
+    if (filterNationality && filterHand && filterSide && filterGender) {
+        filterGender.addEventListener('change', applyFilters);
         filterNationality.addEventListener('change', applyFilters);
         filterHand.addEventListener('change', applyFilters);
         filterSide.addEventListener('change', applyFilters);
     }
 
-    // Initial render
-    renderPlayers(playersData);
+    // Initial render is now done inside fetch
 });
