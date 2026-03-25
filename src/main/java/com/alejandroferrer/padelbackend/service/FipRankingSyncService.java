@@ -49,6 +49,8 @@ public class FipRankingSyncService {
                 PDDocument document = PDDocument.load(inputStream)) {
             PDFTextStripper stripper = new PDFTextStripper();
             return stripper.getText(document);
+        } catch (IOException e) {
+            throw new RuntimeException("Error al descargar o procesar PDF FIP (Puede que la URL ya no exista): " + e.getMessage(), e);
         }
     }
 
