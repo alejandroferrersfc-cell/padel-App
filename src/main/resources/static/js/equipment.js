@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = `
         <div class="equipment-image-wrapper" style="position: relative; max-width: 450px; margin: 0 auto;">
             <!-- Dummy Player Image (Full Body) -->
-            <img src="https://via.placeholder.com/450x650/1e293b/00d2ff?text=Jugador+de+Pádel" style="width: 100%; border-radius: 12px; display: block; box-shadow: var(--shadow-glass);">
+            <img src="https://placehold.co/450x650/1e293b/00d2ff?text=Jugador+de+Pádel" style="width: 100%; border-radius: 12px; display: block; box-shadow: var(--shadow-glass);">
             
             ${equipmentData.map(item => `
                 <div class="hotspot" style="top: ${item.top}; left: ${item.left};" onclick="window.addToWishlist('${item.id}')">
