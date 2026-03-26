@@ -41,3 +41,12 @@ Una aplicación web full-stack para la gestión de una plataforma para los amant
 ## Autor
 - **Nombre:** Alejandro
 - **Curso:** Desarrollo de Aplicaciones Multiplataforma (DAM) - RA 4 / A7.
+<img width="940" height="910" alt="captura1" src="https://github.com/user-attachments/assets/34560176-c581-4754-90bc-f95c3bad6800" />
+<img width="1859" height="1002" alt="captura2" src="https://github.com/user-attachments/assets/f5167628-c3f3-4aa9-841c-89958d3b17cd" />
+
+<img width="1919" height="877" alt="captura3" src="https://github.com/user-attachments/assets/b9895575-c238-4d9a-81e3-1961c7422941" />
+
+
+
+
+
