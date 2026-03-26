@@ -1,9 +1,0 @@
-Coloca tus tres capturas de pantalla de la aplicación ejecutándose en esta carpeta.
-    - [x] Fix extraction of 'puntos' during sync
-- [x] Add UI buttons to trigger FIP synchronization
-- [x] Instruct user on how to push to GitHub
-- [x] Fix Female Ranking sync 404 with new URLs
-- [x] Fix Nationality filtering for synced players
-- [x] Verify total sync of 4000+ playersario
-    
-    Asegúrate de nombrarlas algo como captura1.jpg, captura2.jpg, etc.
