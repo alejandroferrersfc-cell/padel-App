@@ -1,43 +1,178 @@
-# Desarrollo de Proyecto de Pádel
+# 🏓 PadelPro App
 
-Una aplicación web full-stack para la gestión de un club de pádel y actividades relacionadas. Este proyecto sirve como prototipo funcional mínimo que integra un backend robusto con un frontend interactivo.
+Aplicación web full-stack para seguimiento del circuito profesional de pádel. Permite consultar el ranking mundial, interactuar con equipamiento de jugadores profesionales, jugar al Padel Wordle diario y mucho más — con sistema completo de autenticación de usuarios.
 
-## Tecnologías Utilizadas
-- **Backend**: Java 17, Spring Boot (Web, Data JPA), Maven
-- **Base de Datos**: MySQL (producción), H2 (pruebas)
-- **Frontend**: HTML5, CSS3, JavaScript Vanilla (SPA architecture sin frameworks pesados)
+---
 
-## Requisitos Previos
-- Java Development Kit (JDK) 17 o superior.
-- Maven 3.8+ (o usar el wrapper de Maven incluido `mvnw`).
-- Opcional: MySQL Server si se desea usar en modo producción (por defecto usa H2 en memoria para pruebas).
+## 🚀 Tecnologías Utilizadas
 
-## Instrucciones de Instalación
-1. Clonar el repositorio localmente.
-2. Navegar hasta el directorio raíz del proyecto: `cd padel-backend`
-3. Instalar las dependencias de Maven:
-   ```bash
-   ./mvnw clean install
-   ```
+| Capa | Tecnología |
+|---|---|
+| **Backend** | Java 17, Spring Boot 3.4 (Web, Data JPA, Security Crypto) |
+| **Base de Datos** | MySQL (producción), H2 (pruebas) |
+| **Frontend** | HTML5, CSS3, JavaScript Vanilla (SPA sin frameworks) |
+| **Build** | Maven |
 
-## Instrucciones de Ejecución
-1. Arrancar el servidor Spring Boot:
-   ```bash
-   ./mvnw spring-boot:run
-   ```
-2. Abrir un navegador y navegar a: `http://localhost:8080/index.html`
+---
 
-## Funcionalidades Implementadas
-- **Ranking de Jugadores**: Visualización de ranking con filtros (género, nivel, lado) ordenable interactivamente en el cliente.
-- **Padel Wordle**: Minijuego diario integrado ("PadelDLE") con mecánicas de intentos y feedback visual por colores.
-- **Padel Match Predictor**: Simulador que utiliza un algoritmo para predecir puntuaciones de partidos entre jugadores seleccionados basadas en su nivel.
-- **Equipamiento / Wishlist**: Catálogo de palas de pádel con un sistema interactivo para añadir y eliminar artículos de una lista de deseos dinámica que calcula totales.
+## ✅ Funcionalidades Implementadas
 
-## Funcionalidades Pendientes
-- Integración completa de la API de base de datos para el sistema de reserva de pistas y geolocalización.
-- Sistema de login y autenticación, con perfiles de usuario.
-- Historial de partidos guardado en base de datos.
+### 🔐 Sistema de Autenticación (Nuevo en A8)
+- Registro de usuarios con nombre, email y contraseña (mínimo 6 caracteres)
+- Inicio de sesión con usuario o email
+- Contraseñas cifradas con **BCrypt**
+- Sesión persistida en `localStorage`
+- **Acceso restringido**: sin sesión solo se puede ver el Ranking; con sesión acceso completo
+- Botón de cerrar sesión en el sidebar con nombre del usuario visible
+- Modal animado con pestañas Login / Registro
+- Opción de continuar como invitado
 
-## Autor
-- **Nombre:** Alejandro
-- **Curso:** Desarrollo de Aplicaciones Multiplataforma (DAM) - RA 4 / A7.
+### 🖼️ Equipamiento con Hotspots Interactivos (Nuevo en A8)
+- Fotos reales de jugadores del Top 10 mundial (Coello, Tapia, Paquito, Chingotto, Yanguas)
+- **Puntos interactivos (hotspots)** posicionados sobre cada producto en la fotografía
+- Tooltip con nombre del producto y precio al hacer hover
+- Clic en hotspot → añade directamente a la Wishlist
+- Selector de jugador para navegar entre los 5 profesionales
+
+### ❤️ Wishlist Funcional (Nuevo en A8)
+- Añadir/eliminar productos desde los hotspots de equipamiento
+- Persistencia en `localStorage` (sobrevive al cierre del navegador)
+- Botón de compra directa a la web oficial de cada marca
+- Aviso si el artículo ya está en la lista
+
+### 🏆 Ranking Mundial
+- Visualización del ranking FIP masculino y femenino
+- Filtros por categoría, nacionalidad, mano dominante y posición en pista
+- Sincronización con datos del circuito FIP
+
+### 🎮 Padel Wordle Diario
+- Adivina el apellido de un jugador del Top 20
+- Mecánica de colores (verde/amarillo/gris) con feedback visual
+- Teclado virtual integrado
+
+### 📺 Torneos en Directo
+- Visualización de partidos en curso
+- Predicción de resultado basada en ranking
+
+### 📍 Reservar Pista
+- Localización de clubes cercanos por geolocalización
+
+---
+
+## 🔧 Requisitos Previos
+
+- Java Development Kit (JDK) 17 o superior
+- Maven 3.8+
+- MySQL Server
+
+---
+
+## 📦 Instalación y Ejecución
+
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/alejandroferrersfc-cell/padel-App.git
+cd padel-App
+```
+
+### 2. Crear la base de datos MySQL
+```sql
+CREATE DATABASE IF NOT EXISTS plataforma_padel;
+USE plataforma_padel;
+
+CREATE TABLE IF NOT EXISTS usuario (
+    id_usuario BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre_usuario VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### 3. Configurar `application.properties`
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/plataforma_padel?useSSL=false&serverTimezone=UTC
+spring.datasource.username=root
+spring.datasource.password=TU_CONTRASEÑA
+```
+
+### 4. Arrancar el servidor
+```bash
+mvn spring-boot:run
+```
+
+### 5. Abrir en el navegador
+```
+http://localhost:8080
+```
+
+---
+
+## 🗂️ Estructura del Proyecto
+
+```
+src/
+├── main/
+│   ├── java/com/alejandroferrer/padelbackend/
+│   │   ├── controller/
+│   │   │   ├── AuthController.java       ← Endpoints /api/auth/*
+│   │   │   ├── JugadorController.java
+│   │   │   └── AdminSyncController.java
+│   │   ├── entity/
+│   │   │   ├── UsuarioEntity.java        ← Entidad usuario
+│   │   │   └── JugadorEntity.java
+│   │   ├── repository/
+│   │   │   ├── UsuarioRepository.java
+│   │   │   └── JugadorRepository.java
+│   │   └── service/
+│   │       ├── AuthService.java          ← Lógica BCrypt
+│   │       └── RankingService.java
+│   └── resources/
+│       └── static/
+│           ├── css/
+│           │   ├── styles.css
+│           │   ├── components.css
+│           │   └── auth.css              ← Estilos modal auth
+│           ├── js/
+│           │   ├── app.js                ← Router + control sesión
+│           │   ├── auth.js               ← Gestión sesión/modal
+│           │   ├── ranking.js
+│           │   ├── equipment.js          ← Hotspots interactivos
+│           │   ├── wishlist.js           ← Lista de deseos
+│           │   ├── wordle.js
+│           │   ├── live.js
+│           │   └── booking.js
+│           └── index.html
+sql/
+└── create_usuario.sql
+```
+
+---
+
+## 🔌 API REST
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| `POST` | `/api/auth/register` | Registro de nuevo usuario |
+| `POST` | `/api/auth/login` | Inicio de sesión |
+| `POST` | `/api/auth/logout` | Cierre de sesión |
+| `GET` | `/api/jugadores` | Listado del ranking |
+| `POST` | `/api/admin/sync/masculino` | Sincronizar ranking FIP masculino |
+| `POST` | `/api/admin/sync/femenino` | Sincronizar ranking FIP femenino |
+
+---
+
+## 🔮 Funcionalidades Pendientes (A9)
+
+- [ ] Sistema de reserva de pistas con mapa y geolocalización real
+- [ ] Historial de partidos guardado en base de datos por usuario
+- [ ] Perfil de usuario editable
+- [ ] Tokens JWT para autenticación stateless
+
+---
+
+## 👤 Autor
+
+- **Nombre:** Alejandro Ferrer
+- **Curso:** Desarrollo de Aplicaciones Multiplataforma (DAM) — 2º curso 2025/2026
+- **Módulo:** Proyecto Intermodular — RA4 / A8
