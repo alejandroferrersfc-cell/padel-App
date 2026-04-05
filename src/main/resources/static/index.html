@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Padel Pro App</title>
-    <!-- Modern Font: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/auth.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="dark-theme">
     <div class="app-container">
-        <!-- Sidebar Navigation -->
         <nav class="sidebar">
             <div class="logo">
                 <i class="fa-solid fa-table-tennis-paddle-ball"></i>
@@ -26,11 +25,10 @@
                 <li><a href="#live" data-section="live"><i class="fa-solid fa-trophy"></i> En Directo</a></li>
                 <li><a href="#booking" data-section="booking"><i class="fa-solid fa-location-dot"></i> Reservar Pista</a></li>
             </ul>
+            <div id="nav-user-area" class="nav-user-area"></div>
         </nav>
 
-        <!-- Main Content Area -->
         <main class="content-area">
-            <!-- Section 1: Ranking -->
             <section id="ranking" class="page-section active">
                 <header class="section-header">
                     <h1>Ranking Mundial</h1>
@@ -70,18 +68,14 @@
                             <option value="drive">Drive</option>
                         </select>
                     </div>
-                    
                     <div class="sync-actions" style="display: flex; gap: 1rem; margin-bottom: 2rem;">
                         <button id="btn-sync-masculino" class="btn-primary" style="font-size: 0.9rem;"><i class="fa-solid fa-arrows-rotate"></i> Sync FIP Masculino</button>
                         <button id="btn-sync-femenino" class="btn-primary" style="font-size: 0.9rem;"><i class="fa-solid fa-arrows-rotate"></i> Sync FIP Femenino</button>
                     </div>
                 </div>
-                <div class="ranking-grid" id="ranking-container">
-                    <!-- Cards will be injected by JS -->
-                </div>
+                <div class="ranking-grid" id="ranking-container"></div>
             </section>
 
-            <!-- Section 2: Padel Wordle -->
             <section id="wordle" class="page-section">
                 <header class="section-header">
                     <h1>Padel Wordle Diario</h1>
@@ -93,40 +87,30 @@
                 </div>
             </section>
 
-            <!-- Section 3: Equipamiento -->
             <section id="equipment" class="page-section">
                 <header class="section-header">
                     <h1>Equipamiento Profesional</h1>
                     <p>Encuentra qué llevan los profesionales y añádelo a tu lista de deseos.</p>
                 </header>
-                <div class="equipment-showcase" id="equipment-container">
-                    <!-- Photos with interactive points logic -->
-                </div>
+                <div class="equipment-showcase" id="equipment-container"></div>
             </section>
 
-            <!-- Section 4: Wishlist -->
             <section id="wishlist" class="page-section">
                 <header class="section-header">
                     <h1>Mi Lista de Deseos</h1>
                     <p>Tus prendas de equipamiento guardadas.</p>
                 </header>
-                <div class="wishlist-grid" id="wishlist-container">
-                    <!-- Wishlist items injected here -->
-                </div>
+                <div class="wishlist-grid" id="wishlist-container"></div>
             </section>
 
-            <!-- Section 5: En Directo -->
             <section id="live" class="page-section">
                 <header class="section-header">
                     <h1>Torneos en Directo</h1>
                     <p>Marcadores reales vs Predecidos por Ranking.</p>
                 </header>
-                <div class="live-matches-grid" id="live-matches-container">
-                    <!-- Matches injected here -->
-                </div>
+                <div class="live-matches-grid" id="live-matches-container"></div>
             </section>
 
-            <!-- Section 6: Reservar Pista -->
             <section id="booking" class="page-section">
                 <header class="section-header">
                     <h1>Reservar Pista</h1>
@@ -134,16 +118,14 @@
                 </header>
                 <div class="booking-container">
                     <button id="btn-locate" class="btn-primary"><i class="fa-solid fa-location-crosshairs"></i> Compartir mi ubicación</button>
-                    <div class="clubs-list" id="clubs-container">
-                        <!-- Clubs injected here -->
-                    </div>
+                    <div class="clubs-list" id="clubs-container"></div>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- Scripts -->
-    <script src="js/app.js"></script>
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/app.js"></script>
     <script src="js/ranking.js"></script>
     <script src="js/wordle.js"></script>
     <script src="js/equipment.js"></script>
