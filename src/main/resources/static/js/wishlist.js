@@ -1,15 +1,9 @@
 // js/wishlist.js
-
-// Duplicating the data dictionary for easy lookup 
-const SHOPPING_ITEMS = [
-    { id: 'eq1', name: "Pala Bullpadel Vertex 04", price: "280€", img: "https://placehold.co/150?text=Vertex+04", link: "https://www.bullpadel.com" },
-    { id: 'eq2', name: "Camiseta Oficial Tapia", price: "45€", img: "https://placehold.co/150?text=Camiseta", link: "https://www.noxsport.es" },
-    { id: 'eq3', name: "Zapatillas Asics Gel", price: "120€", img: "https://placehold.co/150?text=Asics", link: "https://www.asics.com" }
-];
+// Data is now populated globally by equipment.js (window.SHOPPING_ITEMS)
 
 window.addToWishlist = function(id) {
     let wishlist = JSON.parse(localStorage.getItem('padel_wishlist') || '[]');
-    const item = SHOPPING_ITEMS.find(e => e.id === id);
+    const item = window.SHOPPING_ITEMS.find(e => e.id === id);
     
     if (item && !wishlist.find(w => w.id === id)) {
         wishlist.push(item);

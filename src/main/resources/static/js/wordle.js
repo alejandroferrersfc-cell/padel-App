@@ -3,7 +3,8 @@
 
 const WORD_LENGTH = 5;
 const MAX_GUESSES = 6;
-const TARGET_WORD = "TAPIA"; // In a real app, pick daily based on Date
+const POSSIBLE_WORDS = ["TAPIA", "GALAN", "TELLO", "NIETO", "CAPRA", "TRIAY", "SAINZ", "ARIAS"];
+const TARGET_WORD = POSSIBLE_WORDS[Math.floor(Math.random() * POSSIBLE_WORDS.length)];
 
 const keyboardRows = [
     ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],

@@ -58,6 +58,9 @@ public class FipRankingSyncService {
         int actualizados = 0;
         String[] lineas = texto.split("\\R");
 
+        java.util.List<JugadorEntity> jugadoresExistentes = jugadorRepository.findByCategoriaOrderByRankingFipAsc(categoria);
+        java.util.List<JugadorEntity> noEncontrados = new java.util.ArrayList<>(jugadoresExistentes);
+
         for (String linea : lineas) {
             if (linea == null) {
                 continue;
@@ -107,15 +110,25 @@ public class FipRankingSyncService {
                     continue;
                 }
 
-                Optional<JugadorEntity> existente =
-                        jugadorRepository.findByNombreCompletoAndCategoria(nombreCompleto, categoria);
+                final String normalizedFip = normalizeText(nombreCompleto);
+
+                Optional<JugadorEntity> existente = noEncontrados.stream()
+                        .filter(j -> {
+                            String nDb = normalizeText(j.nombreCompleto);
+                            return nDb.contains(normalizedFip) || normalizedFip.contains(nDb);
+                        })
+                        .findFirst();
 
                 JugadorEntity jugador = existente.orElseGet(JugadorEntity::new);
-                if (jugador.idJugador == null || jugador.idJugador.isBlank()) {
-                    jugador.idJugador = UUID.randomUUID().toString();
+                if (existente.isPresent()) {
+                    noEncontrados.remove(jugador);
                 }
 
-                jugador.nombreCompleto = nombreCompleto;
+                if (jugador.idJugador == null || jugador.idJugador.isBlank()) {
+                    jugador.idJugador = UUID.randomUUID().toString();
+                    jugador.nombreCompleto = nombreCompleto;
+                }
+
                 jugador.categoria = categoria;
                 jugador.rankingFip = ranking;
                 jugador.puntos = puntos;
@@ -138,6 +151,11 @@ public class FipRankingSyncService {
             } catch (NumberFormatException ignored) {
                 // La linea no representa una entrada valida de ranking.
             }
+        }
+
+        // Eliminar jugadores obsoletos o duplicados antiguos que no están en el nuevo ranking
+        if (!noEncontrados.isEmpty()) {
+            jugadorRepository.deleteAll(noEncontrados);
         }
 
         return actualizados;
@@ -177,5 +195,13 @@ public class FipRankingSyncService {
             }
         }
         return 0;
+    }
+
+    private String normalizeText(String text) {
+        if (text == null || text.isBlank()) {
+            return "";
+        }
+        String normalized = java.text.Normalizer.normalize(text, java.text.Normalizer.Form.NFD);
+        return normalized.replaceAll("\\p{M}", "").toLowerCase().trim();
     }
 }
