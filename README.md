@@ -292,5 +292,5 @@ La base de datos se puebla automáticamente al iniciar. Para probar el sistema d
 ---
 
 <p align="center">
-  Hecho con ☕ y <i class="fa-solid fa-table-tennis-paddle-ball"></i> para el Proyecto Intermodular 2025/2026
+  <i class="fa-solid fa-table-tennis-paddle-ball"></i> para el Proyecto Intermodular 2025/2026
 </p>
