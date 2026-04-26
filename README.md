@@ -260,16 +260,23 @@ La base de datos se puebla automáticamente al iniciar. Para probar el sistema d
 
 ## 📸 Capturas de pantalla
 
-> Las capturas se encuentran en la carpeta `/docs/screenshots/` del repositorio.
+### 🏆 Ranking Mundial
+![Ranking Mundial](docs/screenshots/ranking.png)
 
-| Sección | Descripción |
-|---|---|
-| `ranking.png` | Ranking mundial con tarjetas de jugadores y filtros activos |
-| `wordle.png` | Juego Wordle en mitad de una partida con retroalimentación |
-| `equipment.png` | Showcase de equipamiento con hotspots interactivos |
-| `live.png` | Sección de torneos en directo con predicción IA y marcadores |
-| `booking.png` | Reserva de pistas con slider de radio y club cards |
-| `auth.png` | Modal de autenticación con registro/login |
+### 🎮 Padel Wordle
+![Padel Wordle](docs/screenshots/wordle.png)
+
+### 👕 Equipamiento Profesional
+![Equipamiento](docs/screenshots/equipment.png)
+
+### 🔴 Torneos En Directo
+![En Directo](docs/screenshots/live.png)
+
+### 📍 Reservar Pista
+![Reservar Pista](docs/screenshots/booking.png)
+
+### 🔐 Autenticación
+![Login / Registro](docs/screenshots/auth.png)
 
 ---
 
