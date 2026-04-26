@@ -114,11 +114,29 @@
             <section id="booking" class="page-section">
                 <header class="section-header">
                     <h1>Reservar Pista</h1>
-                    <p>Encuentra clubs a menos de 50km de tu ubicación actual.</p>
+                    <p>Encuentra clubs de pádel cerca de ti y reserva tu pista al instante.</p>
                 </header>
                 <div class="booking-container">
-                    <button id="btn-locate" class="btn-primary"><i class="fa-solid fa-location-crosshairs"></i> Compartir mi ubicación</button>
-                    <div class="clubs-list" id="clubs-container"></div>
+                    <div class="booking-controls glass-panel">
+                        <div class="radius-control">
+                            <label for="radius-slider">
+                                <i class="fa-solid fa-circle-dot"></i> Radio de búsqueda:
+                                <strong id="radius-label" style="color:var(--primary);">50 km</strong>
+                            </label>
+                            <div class="radius-slider-wrapper">
+                                <span>10 km</span>
+                                <input type="range" id="radius-slider" min="10" max="50" step="10" value="50" class="radius-slider">
+                                <span>50 km</span>
+                            </div>
+                            <div class="radius-ticks">
+                                <span>10</span><span>20</span><span>30</span><span>40</span><span>50</span>
+                            </div>
+                        </div>
+                        <button id="btn-locate" class="btn-primary">
+                            <i class="fa-solid fa-location-crosshairs"></i> Compartir mi ubicación
+                        </button>
+                    </div>
+                    <div id="clubs-container"></div>
                 </div>
             </section>
         </main>
