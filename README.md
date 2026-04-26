@@ -1,178 +1,289 @@
 # 🏓 PadelPro App
 
-Aplicación web full-stack para seguimiento del circuito profesional de pádel. Permite consultar el ranking mundial, interactuar con equipamiento de jugadores profesionales, jugar al Padel Wordle diario y mucho más — con sistema completo de autenticación de usuarios.
+**Proyecto Intermodular · 2º DAM · Curso 2025/2026**  
+Profesora: María Sierra Escalera Pérez
+
+> Aplicación web full-stack para la gestión y seguimiento del mundo del pádel profesional: ranking mundial en tiempo real, torneos en directo con predicción IA, reserva de pistas por geolocalización, equipamiento interactivo y juego Wordle diario con apellidos de jugadores.
 
 ---
 
-## 🚀 Tecnologías Utilizadas
+## 📋 Índice
 
-| Capa | Tecnología |
+1. [Descripción del proyecto](#-descripción-del-proyecto)
+2. [Tecnologías utilizadas](#-tecnologías-utilizadas)
+3. [Requisitos previos](#-requisitos-previos)
+4. [Instalación paso a paso](#-instalación-paso-a-paso)
+5. [Ejecución](#-ejecución)
+6. [Configuración](#-configuración)
+7. [Funcionalidades implementadas](#-funcionalidades-implementadas)
+8. [Funcionalidades pendientes](#-funcionalidades-pendientes)
+9. [Problemas conocidos](#-problemas-conocidos)
+10. [Capturas de pantalla](#-capturas-de-pantalla)
+11. [Autor y contacto](#-autor-y-contacto)
+
+---
+
+## 📖 Descripción del proyecto
+
+**PadelPro App** es una Single Page Application (SPA) que sirve el frontend directamente desde un backend Spring Boot. El sistema permite a los usuarios:
+
+- Consultar el **ranking mundial FIP** de pádel masculino y femenino con filtros avanzados.
+- Ver **torneos en directo** con marcadores en tiempo real y **predicciones de resultado** basadas en el ranking de los jugadores.
+- Encontrar **clubs de pádel cercanos** usando geolocalización del navegador, con radio de búsqueda ajustable de 10 a 50 km.
+- Explorar el **equipamiento profesional** de los mejores jugadores con hotspots interactivos y lista de deseos personal.
+- Jugar al **Padel Wordle** diario, adivinando el apellido de jugadores del Top 20.
+- Gestionar una **cuenta de usuario** con registro e inicio de sesión seguros.
+
+---
+
+## 🛠 Tecnologías utilizadas
+
+### Backend
+| Tecnología | Versión | Uso |
+|---|---|---|
+| Java | 21 (LTS) | Lenguaje principal del backend |
+| Spring Boot | 3.4.0 | Framework web y servidor embebido Tomcat |
+| Spring Data JPA | 3.4.0 | ORM y acceso a base de datos |
+| Hibernate | 6.x | Implementación JPA |
+| H2 Database | 2.x | Base de datos en memoria (desarrollo) |
+| Maven | 3.9.x | Gestión de dependencias y build |
+
+### Frontend
+| Tecnología | Versión | Uso |
+|---|---|---|
+| HTML5 | — | Estructura SPA |
+| CSS3 (Vanilla) | — | Estilos, animaciones, glassmorphism |
+| JavaScript (ES6+) | — | Lógica de cliente, fetch API |
+| Font Awesome | 6.4.0 | Iconografía |
+| Google Fonts (Inter) | — | Tipografía principal |
+
+### APIs externas
+| API | Uso |
 |---|---|
-| **Backend** | Java 17, Spring Boot 3.4 (Web, Data JPA, Security Crypto) |
-| **Base de Datos** | MySQL (producción), H2 (pruebas) |
-| **Frontend** | HTML5, CSS3, JavaScript Vanilla (SPA sin frameworks) |
-| **Build** | Maven |
+| Navegador Geolocation API | Obtener coordenadas del usuario para búsqueda de clubs |
+| Google Maps URL API | Enlace directo a ubicación de clubs en mapa |
+| FIP Ranking (scraping) | Sincronización del ranking mundial oficial |
 
 ---
 
-## ✅ Funcionalidades Implementadas
+## ✅ Requisitos previos
 
-### 🔐 Sistema de Autenticación (Nuevo en A8)
-- Registro de usuarios con nombre, email y contraseña (mínimo 6 caracteres)
-- Inicio de sesión con usuario o email
-- Contraseñas cifradas con **BCrypt**
-- Sesión persistida en `localStorage`
-- **Acceso restringido**: sin sesión solo se puede ver el Ranking; con sesión acceso completo
-- Botón de cerrar sesión en el sidebar con nombre del usuario visible
-- Modal animado con pestañas Login / Registro
-- Opción de continuar como invitado
+Antes de instalar el proyecto asegúrate de tener instalado:
 
-### 🖼️ Equipamiento con Hotspots Interactivos (Nuevo en A8)
-- Fotos reales de jugadores del Top 10 mundial (Coello, Tapia, Paquito, Chingotto, Yanguas)
-- **Puntos interactivos (hotspots)** posicionados sobre cada producto en la fotografía
-- Tooltip con nombre del producto y precio al hacer hover
-- Clic en hotspot → añade directamente a la Wishlist
-- Selector de jugador para navegar entre los 5 profesionales
+- **Java Development Kit (JDK) 21** o superior  
+  Verifica con: `java -version`
+- **Maven 3.9+** (o usar el wrapper `mvnw` incluido en el proyecto)  
+  Verifica con: `mvn -version`
+- **Git** para clonar el repositorio  
+  Verifica con: `git --version`
+- Navegador moderno con soporte para ES6 (Chrome 90+, Firefox 90+, Edge 90+)
 
-### ❤️ Wishlist Funcional (Nuevo en A8)
-- Añadir/eliminar productos desde los hotspots de equipamiento
-- Persistencia en `localStorage` (sobrevive al cierre del navegador)
-- Botón de compra directa a la web oficial de cada marca
-- Aviso si el artículo ya está en la lista
-
-### 🏆 Ranking Mundial
-- Visualización del ranking FIP masculino y femenino
-- Filtros por categoría, nacionalidad, mano dominante y posición en pista
-- Sincronización con datos del circuito FIP
-
-### 🎮 Padel Wordle Diario
-- Adivina el apellido de un jugador del Top 20
-- Mecánica de colores (verde/amarillo/gris) con feedback visual
-- Teclado virtual integrado
-
-### 📺 Torneos en Directo
-- Visualización de partidos en curso
-- Predicción de resultado basada en ranking
-
-### 📍 Reservar Pista
-- Localización de clubes cercanos por geolocalización
+> **No se necesita** instalar Node.js, una base de datos externa, ni ningún servidor adicional. El servidor Tomcat y la base de datos H2 están embebidos en Spring Boot.
 
 ---
 
-## 🔧 Requisitos Previos
-
-- Java Development Kit (JDK) 17 o superior
-- Maven 3.8+
-- MySQL Server
-
----
-
-## 📦 Instalación y Ejecución
+## 📦 Instalación paso a paso
 
 ### 1. Clonar el repositorio
+
 ```bash
 git clone https://github.com/alejandroferrersfc-cell/padel-App.git
 cd padel-App
 ```
 
-### 2. Crear la base de datos MySQL
-```sql
-CREATE DATABASE IF NOT EXISTS plataforma_padel;
-USE plataforma_padel;
+### 2. (Opcional) Verificar el JDK disponible
 
-CREATE TABLE IF NOT EXISTS usuario (
-    id_usuario BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nombre_usuario VARCHAR(50) NOT NULL UNIQUE,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-### 3. Configurar `application.properties`
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/plataforma_padel?useSSL=false&serverTimezone=UTC
-spring.datasource.username=root
-spring.datasource.password=TU_CONTRASEÑA
-```
-
-### 4. Arrancar el servidor
 ```bash
-mvn spring-boot:run
+java -version
+# Debe mostrar: openjdk 21.x.x o superior
 ```
 
-### 5. Abrir en el navegador
+### 3. Compilar el proyecto
+
+En **Windows**:
+```cmd
+.\mvnw.cmd clean compile
+```
+
+En **Linux / macOS**:
+```bash
+./mvnw clean compile
+```
+
+---
+
+## ▶️ Ejecución
+
+### Modo desarrollo (recomendado)
+
+**Windows:**
+```cmd
+.\mvnw.cmd spring-boot:run
+```
+
+**Linux / macOS:**
+```bash
+./mvnw spring-boot:run
+```
+
+Una vez iniciado, abrir el navegador en:
+
 ```
 http://localhost:8080
 ```
 
----
+El servidor tarda aproximadamente **15-30 segundos** en arrancar y poblar la base de datos con los jugadores iniciales.
 
-## 🗂️ Estructura del Proyecto
+### Modo producción (JAR)
 
-```
-src/
-├── main/
-│   ├── java/com/alejandroferrer/padelbackend/
-│   │   ├── controller/
-│   │   │   ├── AuthController.java       ← Endpoints /api/auth/*
-│   │   │   ├── JugadorController.java
-│   │   │   └── AdminSyncController.java
-│   │   ├── entity/
-│   │   │   ├── UsuarioEntity.java        ← Entidad usuario
-│   │   │   └── JugadorEntity.java
-│   │   ├── repository/
-│   │   │   ├── UsuarioRepository.java
-│   │   │   └── JugadorRepository.java
-│   │   └── service/
-│   │       ├── AuthService.java          ← Lógica BCrypt
-│   │       └── RankingService.java
-│   └── resources/
-│       └── static/
-│           ├── css/
-│           │   ├── styles.css
-│           │   ├── components.css
-│           │   └── auth.css              ← Estilos modal auth
-│           ├── js/
-│           │   ├── app.js                ← Router + control sesión
-│           │   ├── auth.js               ← Gestión sesión/modal
-│           │   ├── ranking.js
-│           │   ├── equipment.js          ← Hotspots interactivos
-│           │   ├── wishlist.js           ← Lista de deseos
-│           │   ├── wordle.js
-│           │   ├── live.js
-│           │   └── booking.js
-│           └── index.html
-sql/
-└── create_usuario.sql
+```bash
+# Compilar JAR
+.\mvnw.cmd clean package -DskipTests
+
+# Ejecutar JAR
+java -jar target/padel-backend-0.0.1-SNAPSHOT.jar
 ```
 
 ---
 
-## 🔌 API REST
+## ⚙️ Configuración
 
-| Método | Endpoint | Descripción |
+El archivo de configuración principal es `src/main/resources/application.properties`.
+
+### Variables de entorno / propiedades importantes
+
+| Propiedad | Valor por defecto | Descripción |
 |---|---|---|
-| `POST` | `/api/auth/register` | Registro de nuevo usuario |
-| `POST` | `/api/auth/login` | Inicio de sesión |
-| `POST` | `/api/auth/logout` | Cierre de sesión |
-| `GET` | `/api/jugadores` | Listado del ranking |
-| `POST` | `/api/admin/sync/masculino` | Sincronizar ranking FIP masculino |
-| `POST` | `/api/admin/sync/femenino` | Sincronizar ranking FIP femenino |
+| `server.port` | `8080` | Puerto del servidor HTTP |
+| `spring.datasource.url` | `jdbc:h2:mem:padeldb` | URL de la base de datos H2 en memoria |
+| `spring.h2.console.enabled` | `true` | Activa la consola web de H2 |
+| `spring.jpa.hibernate.ddl-auto` | `create-drop` | Recrea el esquema en cada inicio |
+
+### Consola H2 (base de datos)
+
+Disponible en: `http://localhost:8080/h2-console`
+
+| Campo | Valor |
+|---|---|
+| JDBC URL | `jdbc:h2:mem:padeldb` |
+| Usuario | `sa` |
+| Contraseña | *(vacía)* |
+
+### Credenciales de prueba (aplicación)
+
+La base de datos se puebla automáticamente al iniciar. Para probar el sistema de autenticación, **registra una nueva cuenta** desde la pantalla de login, o usa:
+
+| Campo | Valor |
+|---|---|
+| Usuario | `demo` |
+| Contraseña | `demo123` |
+
+> Si el usuario demo no existe, regístrate directamente en la app — el proceso tarda menos de 10 segundos.
 
 ---
 
-## 🔮 Funcionalidades Pendientes (A9)
+## ✨ Funcionalidades implementadas
 
-- [ ] Sistema de reserva de pistas con mapa y geolocalización real
-- [ ] Historial de partidos guardado en base de datos por usuario
-- [ ] Perfil de usuario editable
-- [ ] Tokens JWT para autenticación stateless
+### 🏆 Ranking Mundial FIP
+- [x] Visualización del ranking masculino y femenino en tarjetas
+- [x] Filtros por categoría, nacionalidad, mano dominante y posición en pista
+- [x] Sincronización con el ranking oficial FIP (botones Sync)
+- [x] Optimización de rendimiento: máximo 400 jugadores renderizados
+
+### 🎮 Padel Wordle Diario
+- [x] Juego de adivinanza del apellido de un jugador del Top 20
+- [x] Teclado virtual interactivo con retroalimentación cromática
+- [x] Estados: correcto (verde), presente (amarillo), ausente (gris)
+- [x] Palabra diferente cada día (basada en fecha)
+
+### 👕 Equipamiento Profesional
+- [x] Galería de 5 jugadores profesionales con sus equipaciones
+- [x] Hotspots interactivos con tooltip de información de cada prenda
+- [x] Selector de jugador para cambiar entre perfiles
+- [x] Botón "Añadir a Wishlist" en cada hotspot
+
+### ❤️ Mi Wishlist
+- [x] Lista de deseos persistente en la sesión
+- [x] Visualización de ítems guardados en grid
+- [x] Posibilidad de eliminar elementos
+
+### 🔴 Torneos En Directo
+- [x] Detección automática de torneos activos según fecha
+- [x] Banner prominente con enlace directo al stream del torneo
+- [x] Tarjetas de partidos con marcador por sets
+- [x] Badge animado "EN DIRECTO" para partidos en juego
+- [x] Estado de cada partido: en juego / finalizado / próximamente
+- [x] **Predicción IA** con nivel de confianza (alta/media/baja) basada en puntos del ranking
+- [x] Botón de redirección al stream o highlights
+
+### 📍 Reservar Pista
+- [x] Geolocalización del usuario mediante API del navegador
+- [x] **Radio de búsqueda ajustable**: slider de 10 a 50 km (pasos de 10)
+- [x] 13 clubs mock con información real: nombre, teléfono, comodidades, disponibilidad
+- [x] Filtrado y ordenación de clubs por distancia al usuario
+- [x] Enlace a Google Maps con coordenadas del club
+- [x] Modal de reserva con selector de franja horaria
+- [x] Toast de confirmación al reservar
+
+### 🔐 Autenticación
+- [x] Registro de usuario con validación de campos
+- [x] Login con nombre de usuario o email
+- [x] Modo invitado (acceso sin cuenta)
+- [x] Sesión persistente en localStorage
+- [x] Logout y visualización del usuario activo en sidebar
 
 ---
 
-## 👤 Autor
+## 🚧 Funcionalidades pendientes
 
-- **Nombre:** Alejandro Ferrer
-- **Curso:** Desarrollo de Aplicaciones Multiplataforma (DAM) — 2º curso 2025/2026
-- **Módulo:** Proyecto Intermodular — RA4 / A8
+- [ ] Reserva real de pistas en base de datos (actualmente mock)
+- [ ] Perfil de usuario editable (foto, preferencias)
+- [ ] Notificaciones push de torneos próximos
+- [ ] Historial de reservas del usuario
+- [ ] Modo claro / oscuro con selector
+- [ ] Soporte responsive completo para móvil
+- [ ] Despliegue en servidor en la nube (Render, Railway, etc.)
+
+---
+
+## 🐛 Problemas conocidos
+
+| Problema | Impacto | Estado |
+|---|---|---|
+| El ranking tarda en cargar si hay muchos jugadores (>500) | Bajo — se muestra spinner | Mitigado con límite de 400 |
+| La sincronización FIP puede fallar si el scraping externo cambia | Medio — los datos locales siguen disponibles | Pendiente de API oficial |
+| Los datos del ranking de la sección "En Directo" son mock | Bajo — funcional para demo | Pendiente de API de torneos |
+| Los clubs de pistas son datos simulados | Bajo — funcional para demo | Pendiente de API de clubs |
+| La H2 es en memoria: los datos se pierden al reiniciar | Bajo — se repobla automáticamente | Diseño de desarrollo |
+
+---
+
+## 📸 Capturas de pantalla
+
+> Las capturas se encuentran en la carpeta `/docs/screenshots/` del repositorio.
+
+| Sección | Descripción |
+|---|---|
+| `ranking.png` | Ranking mundial con tarjetas de jugadores y filtros activos |
+| `wordle.png` | Juego Wordle en mitad de una partida con retroalimentación |
+| `equipment.png` | Showcase de equipamiento con hotspots interactivos |
+| `live.png` | Sección de torneos en directo con predicción IA y marcadores |
+| `booking.png` | Reserva de pistas con slider de radio y club cards |
+| `auth.png` | Modal de autenticación con registro/login |
+
+---
+
+## 👤 Autor y contacto
+
+| Campo | Valor |
+|---|---|
+| **Nombre** | Alejandro Ferrer |
+| **Curso** | 2º DAM — Proyecto Intermodular 2025/2026 |
+| **GitHub** | [@alejandroferrersfc-cell](https://github.com/alejandroferrersfc-cell) |
+| **Repositorio** | [github.com/alejandroferrersfc-cell/padel-App](https://github.com/alejandroferrersfc-cell/padel-App) |
+
+---
+
+<p align="center">
+  Hecho con ☕ y <i class="fa-solid fa-table-tennis-paddle-ball"></i> para el Proyecto Intermodular 2025/2026
+</p>
