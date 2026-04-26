@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentación Técnica — PadelPro App</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --primary: #0ea5e9;
+    --primary-dark: #0369a1;
+    --accent: #10b981;
+    --text: #1e293b;
+    --text-sec: #475569;
+    --bg-light: #f8fafc;
+    --border: #e2e8f0;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background: white;
+    font-size: 10.5pt;
+    line-height: 1.6;
+  }
+
+  /* ─── COVER PAGE ─── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+    color: white;
+    text-align: center;
+    padding: 4rem 2rem;
+    page-break-after: always;
+  }
+  .cover-logo {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 20px rgba(14,165,233,0.5));
+  }
+  .cover h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, #38bdf8, #7dd3fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .cover h2 {
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: #94a3b8;
+    margin-bottom: 3rem;
+  }
+  .cover-meta {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 1rem;
+    padding: 1.5rem 2.5rem;
+    max-width: 500px;
+    text-align: left;
+  }
+  .cover-meta p { margin-bottom: 0.4rem; font-size: 0.95rem; color: #cbd5e1; }
+  .cover-meta strong { color: #38bdf8; }
+  .cover-badge {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 2rem;
+  }
+
+  /* ─── PRINT PAGE ─── */
+  .page {
+    max-width: 210mm;
+    margin: 0 auto;
+    padding: 20mm 18mm;
+  }
+
+  /* ─── SECTION HEADER ─── */
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    border-left: 4px solid var(--primary);
+    padding-left: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 2rem;
+  }
+  .section-title:first-child { margin-top: 0; }
+
+  .subsection-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .subsection-title::before {
+    content: '';
+    display: inline-block;
+    width: 8px; height: 8px;
+    background: var(--primary);
+    border-radius: 50%;
+  }
+
+  /* ─── DIAGRAMS ─── */
+  .arch-diagram {
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    overflow: hidden;
+  }
+
+  .arch-grid {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr 60px 1fr;
+    gap: 0;
+    align-items: center;
+    margin: 1rem 0;
+  }
+
+  .arch-box {
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .arch-box.primary-box { border-color: var(--primary); }
+  .arch-box.accent-box  { border-color: var(--accent); }
+  .arch-box.warn-box    { border-color: var(--warning); }
+  .arch-box-icon { font-size: 2rem; margin-bottom: 0.3rem; }
+  .arch-box-label { font-size: 0.8rem; font-weight: 700; color: var(--text); }
+  .arch-box-tech  { font-size: 0.7rem; color: var(--text-sec); margin-top: 0.2rem; }
+
+  .arch-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-sec);
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  /* ─── DB DIAGRAM ─── */
+  .db-diagram {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 1rem 0;
+  }
+  .db-table {
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .db-table-header {
+    background: var(--primary);
+    color: white;
+    padding: 0.5rem 1rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .db-table-body { padding: 0.5rem; }
+  .db-field {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 4px;
+  }
+  .db-field:nth-child(even) { background: var(--bg-light); }
+  .db-field-name { font-family: 'JetBrains Mono', monospace; flex: 1; }
+  .db-field-type { color: var(--primary-dark); font-weight: 500; font-size: 0.72rem; }
+  .badge-pk { background: var(--warning); color: white; font-size: 0.6rem; font-weight: 700; padding: 1px 5px; border-radius: 3px; }
+  .badge-fk { background: var(--primary); color: white; font-size: 0.6rem; font-weight: 700; padding: 1px 5px; border-radius: 3px; }
+  .badge-uq { background: var(--accent); color: white; font-size: 0.6rem; font-weight: 700; padding: 1px 5px; border-radius: 3px; }
+
+  /* ─── TABLES ─── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 0.75rem 0;
+  }
+  th {
+    background: var(--primary);
+    color: white;
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+  td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: var(--bg-light); }
+  .method-get   { background: var(--accent);   color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; font-family: monospace; }
+  .method-post  { background: var(--primary);  color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; font-family: monospace; }
+  .auth-yes { color: var(--primary-dark); font-weight: 600; }
+  .auth-no  { color: var(--text-sec); }
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.82em;
+    color: var(--primary-dark);
+  }
+
+  /* ─── CALLOUT BOXES ─── */
+  .callout {
+    border-left: 4px solid var(--primary);
+    background: #eff6ff;
+    padding: 0.75rem 1rem;
+    border-radius: 0 8px 8px 0;
+    margin: 0.75rem 0;
+    font-size: 0.9rem;
+  }
+  .callout.success { border-color: var(--accent); background: #ecfdf5; }
+  .callout.warning { border-color: var(--warning); background: #fffbeb; }
+  .callout-title { font-weight: 700; margin-bottom: 0.2rem; }
+
+  /* ─── TECH STACK GRID ─── */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin: 0.75rem 0;
+  }
+  .tech-card {
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+  }
+  .tech-card-layer { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-sec); font-weight: 600; margin-bottom: 0.2rem; }
+  .tech-card-name  { font-weight: 700; font-size: 0.9rem; color: var(--text); }
+  .tech-card-ver   { font-size: 0.75rem; color: var(--primary-dark); font-weight: 500; }
+
+  /* ─── DATA FLOW ─── */
+  .flow-steps {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    margin: 0.75rem 0;
+  }
+  .flow-step {
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  .flow-step.highlighted { background: var(--primary); color: white; border-color: var(--primary); }
+  .flow-arrow { color: var(--text-sec); font-weight: 700; font-size: 1rem; }
+
+  /* ─── TEST TABLE ─── */
+  .test-result-ok  { color: var(--accent);  font-weight: 600; }
+  .test-result-ok::before  { content: '✓ '; }
+  .test-result-na  { color: var(--text-sec); }
+
+  /* ─── PAGE BREAKS ─── */
+  .page-break { page-break-before: always; margin-top: 0; padding-top: 20mm; }
+
+  /* ─── FOOTER ─── */
+  .doc-footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.75rem;
+    color: var(--text-sec);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ─── PRINT STYLES ─── */
+  @media print {
+    .cover { min-height: 100vh; }
+    .page { padding: 15mm 15mm; }
+    .no-print { display: none; }
+    body { font-size: 10pt; }
+  }
+
+  /* ─── PRINT BUTTON ─── */
+  .print-btn {
+    position: fixed; bottom: 2rem; right: 2rem;
+    background: var(--primary); color: white;
+    border: none; padding: 0.75rem 1.5rem;
+    border-radius: 8px; font-size: 1rem; font-weight: 600;
+    cursor: pointer; box-shadow: 0 4px 12px rgba(14,165,233,0.4);
+    z-index: 999;
+  }
+  .print-btn:hover { background: var(--primary-dark); }
+
+  p { margin-bottom: 0.6rem; }
+  ul, ol { padding-left: 1.5rem; margin-bottom: 0.6rem; }
+  li { margin-bottom: 0.2rem; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">🖨️ Guardar como PDF</button>
+
+<!-- ═══════════════════════════════════════════════════
+     PORTADA
+═══════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-logo">🏓</div>
+  <h1>PadelPro App</h1>
+  <h2>Documentación Técnica del Sistema</h2>
+  <div class="cover-meta">
+    <p><strong>Proyecto:</strong> Proyecto Intermodular — 2º DAM</p>
+    <p><strong>Curso:</strong> 2025 / 2026</p>
+    <p><strong>Autora / Profesora:</strong> María Sierra Escalera Pérez</p>
+    <p><strong>Alumno:</strong> Alejandro Ferrer</p>
+    <p><strong>Repositorio:</strong> github.com/alejandroferrersfc-cell/padel-App</p>
+    <p><strong>Fecha:</strong> Abril 2026</p>
+  </div>
+  <span class="cover-badge">Entrega A9 — Sistema Casi Completo</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PÁGINA 1 — ARQUITECTURA DEL SISTEMA
+═══════════════════════════════════════════════════ -->
+<div class="page">
+
+  <h2 class="section-title">A) Arquitectura del Sistema</h2>
+
+  <p>
+    PadelPro App sigue una arquitectura <strong>monolítica integrada</strong>: el backend Spring Boot actúa como servidor web y expone tanto la API REST como los archivos estáticos del frontend a través del mismo puerto (8080). No existe un proceso de build separado para el frontend.
+  </p>
+
+  <div class="subsection-title">Diagrama de Componentes</div>
+
+  <div class="arch-diagram">
+    <div class="arch-grid">
+      <!-- Frontend -->
+      <div class="arch-box primary-box">
+        <div class="arch-box-icon">🖥️</div>
+        <div class="arch-box-label">Frontend SPA</div>
+        <div class="arch-box-tech">HTML5 · CSS3 · JavaScript ES6+</div>
+        <div class="arch-box-tech" style="margin-top:0.4rem; font-size:0.65rem;">
+          ranking.js · live.js · booking.js<br>
+          wordle.js · equipment.js · auth.js
+        </div>
+      </div>
+      <div class="arch-arrow">↔️</div>
+      <!-- Backend -->
+      <div class="arch-box primary-box">
+        <div class="arch-box-icon">⚙️</div>
+        <div class="arch-box-label">Backend Spring Boot</div>
+        <div class="arch-box-tech">Java 21 · Spring Boot 3.4</div>
+        <div class="arch-box-tech" style="margin-top:0.4rem; font-size:0.65rem;">
+          REST API · Tomcat embebido<br>
+          Recursos estáticos
+        </div>
+      </div>
+      <div class="arch-arrow">↔️</div>
+      <!-- DB -->
+      <div class="arch-box accent-box">
+        <div class="arch-box-icon">🗄️</div>
+        <div class="arch-box-label">Base de Datos H2</div>
+        <div class="arch-box-tech">H2 In-Memory v2.x</div>
+        <div class="arch-box-tech" style="margin-top:0.4rem; font-size:0.65rem;">
+          Tabla: jugador<br>
+          Tabla: usuario
+        </div>
+      </div>
+    </div>
+
+    <!-- External APIs row -->
+    <div style="display:flex; gap:1rem; margin-top:1rem; justify-content:center;">
+      <div class="arch-box warn-box" style="flex:1; max-width:200px;">
+        <div class="arch-box-icon">📄</div>
+        <div class="arch-box-label">FIP PDF Ranking</div>
+        <div class="arch-box-tech">PDF externo scrapeado por el backend</div>
+      </div>
+      <div class="arch-box warn-box" style="flex:1; max-width:200px;">
+        <div class="arch-box-icon">📍</div>
+        <div class="arch-box-label">Geolocation API</div>
+        <div class="arch-box-tech">API del navegador (cliente)</div>
+      </div>
+      <div class="arch-box warn-box" style="flex:1; max-width:200px;">
+        <div class="arch-box-icon">🗺️</div>
+        <div class="arch-box-label">Google Maps URL</div>
+        <div class="arch-box-tech">Enlace externo a ubicaciones</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection-title">Tecnologías por Componente</div>
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-card-layer">Frontend</div>
+      <div class="tech-card-name">HTML5 / CSS3</div>
+      <div class="tech-card-ver">Vanilla — sin frameworks</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card-layer">Frontend</div>
+      <div class="tech-card-name">JavaScript</div>
+      <div class="tech-card-ver">ES6+ Modules — fetch API</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card-layer">Servidor web</div>
+      <div class="tech-card-name">Apache Tomcat</div>
+      <div class="tech-card-ver">Embebido en Spring Boot 3.4</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card-layer">Backend</div>
+      <div class="tech-card-name">Spring Boot</div>
+      <div class="tech-card-ver">3.4.0 — Java 21</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card-layer">ORM</div>
+      <div class="tech-card-name">Hibernate / JPA</div>
+      <div class="tech-card-ver">Spring Data JPA 3.4</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card-layer">Base de datos</div>
+      <div class="tech-card-name">H2 Database</div>
+      <div class="tech-card-ver">In-Memory — desarrollo</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card-layer">Build</div>
+      <div class="tech-card-name">Maven</div>
+      <div class="tech-card-ver">3.9.x — mvnw wrapper</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card-layer">Iconografía</div>
+      <div class="tech-card-name">Font Awesome</div>
+      <div class="tech-card-ver">6.4.0 CDN</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card-layer">Tipografía</div>
+      <div class="tech-card-name">Google Fonts</div>
+      <div class="tech-card-ver">Inter — Google CDN</div>
+    </div>
+  </div>
+
+  <div class="subsection-title">Flujo de Datos</div>
+
+  <p><strong>1. Consulta del Ranking:</strong></p>
+  <div class="flow-steps">
+    <div class="flow-step">👤 Usuario abre la app</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step highlighted">GET /api/jugadores</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Spring Boot consulta H2</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">JSON de jugadores</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">ranking.js renderiza tarjetas</div>
+  </div>
+
+  <p><strong>2. Sincronización FIP:</strong></p>
+  <div class="flow-steps">
+    <div class="flow-step">👤 Click "Sync FIP"</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step highlighted">GET /api/admin/sync-ranking-masculino</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Backend descarga PDF FIP</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Parsea y guarda en H2</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">{ actualizados: N }</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Frontend refresca lista</div>
+  </div>
+
+  <p><strong>3. Autenticación:</strong></p>
+  <div class="flow-steps">
+    <div class="flow-step">👤 Login / Registro</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step highlighted">POST /api/auth/login</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">AuthService valida credenciales</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">{ nombreUsuario, idUsuario }</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">auth.js guarda en localStorage</div>
+  </div>
+
+  <div class="doc-footer">
+    <span>PadelPro App — Documentación Técnica</span>
+    <span>Alejandro Ferrer · 2º DAM 2025/2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PÁGINA 2 — MODELO DE DATOS
+═══════════════════════════════════════════════════ -->
+<div class="page page-break">
+
+  <h2 class="section-title">B) Modelo de Datos</h2>
+
+  <p>
+    La base de datos utiliza <strong>H2 en memoria</strong> durante el desarrollo, con esquema gestionado automáticamente por Hibernate. El modelo consta de dos entidades principales: <code>jugador</code> y <code>usuario</code>.
+  </p>
+
+  <div class="subsection-title">Diagrama de Tablas</div>
+
+  <div class="db-diagram">
+    <!-- JUGADOR -->
+    <div class="db-table">
+      <div class="db-table-header">📋 jugador</div>
+      <div class="db-table-body">
+        <div class="db-field">
+          <span class="badge-pk">PK</span>
+          <span class="db-field-name">id_jugador</span>
+          <span class="db-field-type">VARCHAR</span>
+        </div>
+        <div class="db-field">
+          <span class="db-field-name">nombre_completo</span>
+          <span class="db-field-type">VARCHAR</span>
+        </div>
+        <div class="db-field">
+          <span class="db-field-name">nacionalidad</span>
+          <span class="db-field-type">VARCHAR(3)</span>
+        </div>
+        <div class="db-field">
+          <span class="db-field-name">mano_dominante</span>
+          <span class="db-field-type">VARCHAR</span>
+        </div>
+        <div class="db-field">
+          <span class="db-field-name">ranking_fip</span>
+          <span class="db-field-type">INT</span>
+        </div>
+        <div class="db-field">
+          <span class="db-field-name">puntos</span>
+          <span class="db-field-type">INT</span>
+        </div>
+        <div class="db-field">
+          <span class="db-field-name">categoria</span>
+          <span class="db-field-type">VARCHAR</span>
+        </div>
+        <div class="db-field">
+          <span class="db-field-name">posicion_juego</span>
+          <span class="db-field-type">VARCHAR</span>
+        </div>
+        <div class="db-field">
+          <span class="db-field-name">foto_perfil</span>
+          <span class="db-field-type">VARCHAR (URL)</span>
+        </div>
+        <div class="db-field">
+          <span class="db-field-name">fecha_actualizacion_ranking</span>
+          <span class="db-field-type">VARCHAR</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- USUARIO -->
+    <div class="db-table">
+      <div class="db-table-header" style="background: var(--accent);">👤 usuario</div>
+      <div class="db-table-body">
+        <div class="db-field">
+          <span class="badge-pk">PK</span>
+          <span class="db-field-name">id_usuario</span>
+          <span class="db-field-type">BIGINT AUTO</span>
+        </div>
+        <div class="db-field">
+          <span class="badge-uq">UQ</span>
+          <span class="db-field-name">nombre_usuario</span>
+          <span class="db-field-type">VARCHAR(50)</span>
+        </div>
+        <div class="db-field">
+          <span class="badge-uq">UQ</span>
+          <span class="db-field-name">email</span>
+          <span class="db-field-type">VARCHAR(100)</span>
+        </div>
+        <div class="db-field">
+          <span class="db-field-name">password_hash</span>
+          <span class="db-field-type">VARCHAR</span>
+        </div>
+        <div class="db-field">
+          <span class="db-field-name">fecha_registro</span>
+          <span class="db-field-type">TIMESTAMP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-title">⚠️ Nota sobre la base de datos</div>
+    Las tablas no tienen relación directa entre sí ya que la wishlist y el historial de reservas se gestionan en el <strong>frontend (localStorage)</strong>. En una versión de producción se añadirían tablas de relación y se migraría a MySQL/PostgreSQL.
+  </div>
+
+  <div class="subsection-title">Descripción de Tablas</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Tabla</th>
+        <th>Propósito</th>
+        <th>Campos clave</th>
+        <th>Poblado por</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>jugador</code></td>
+        <td>Almacena el ranking mundial FIP de jugadores masculinos y femeninos</td>
+        <td><code>id_jugador</code> (clave compuesta FIP), <code>puntos</code>, <code>ranking_fip</code>, <code>categoria</code></td>
+        <td>DataInitializer al arrancar + endpoint de sync</td>
+      </tr>
+      <tr>
+        <td><code>usuario</code></td>
+        <td>Cuentas de usuario registrados en la aplicación</td>
+        <td><code>nombre_usuario</code> (único), <code>email</code> (único), <code>password_hash</code></td>
+        <td>Endpoint <code>POST /api/auth/register</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="subsection-title">Seguridad de contraseñas</div>
+  <p>
+    Las contraseñas se almacenan con <strong>hash SHA-256</strong> implementado en <code>AuthService</code>. Nunca se guarda la contraseña en texto plano. Adicionalmente, las validaciones backend rechazan contraseñas de menos de 6 caracteres y verifican unicidad de nombre de usuario y email.
+  </p>
+
+  <div class="subsection-title">Datos de sesión (cliente)</div>
+  <p>
+    La sesión del usuario no utiliza JWT ni cookies de servidor. Tras el login exitoso, el frontend guarda en <strong>localStorage</strong> el objeto <code>{ nombreUsuario, idUsuario }</code> bajo la clave <code>padel_session</code>. Al recargar la página, <code>auth.js</code> lee este valor y restaura la sesión automáticamente.
+  </p>
+
+  <div class="doc-footer">
+    <span>PadelPro App — Documentación Técnica</span>
+    <span>Alejandro Ferrer · 2º DAM 2025/2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PÁGINA 3 — API Y ENDPOINTS
+═══════════════════════════════════════════════════ -->
+<div class="page page-break">
+
+  <h2 class="section-title">C) API REST y Endpoints</h2>
+
+  <p>
+    El backend expone una API REST bajo el prefijo <code>/api</code>. Todos los endpoints devuelven JSON y permiten CORS desde cualquier origen (<code>@CrossOrigin(origins = "*")</code>) para facilitar el desarrollo local.
+  </p>
+
+  <div class="subsection-title">Autenticación</div>
+  <p>
+    La aplicación utiliza un sistema de <strong>sesión basada en localStorage</strong> (sin JWT). El backend no comprueba tokens en las peticiones salvo en el proceso de login/registro. Las secciones protegidas (Wordle, Equipamiento, Wishlist, En Directo, Reservar Pista) son gestionadas por <code>auth.js</code> en el lado del cliente.
+  </p>
+
+  <div class="subsection-title">Endpoints de Autenticación — <code>/api/auth</code></div>
+  <table>
+    <thead>
+      <tr>
+        <th>Método</th>
+        <th>Ruta</th>
+        <th>Descripción</th>
+        <th>Body</th>
+        <th>Auth</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="method-post">POST</span></td>
+        <td><code>/api/auth/register</code></td>
+        <td>Registrar nuevo usuario. Valida campos, verifica unicidad y hashea la contraseña.</td>
+        <td><code>{ nombreUsuario, email, password }</code></td>
+        <td class="auth-no">No</td>
+      </tr>
+      <tr>
+        <td><span class="method-post">POST</span></td>
+        <td><code>/api/auth/login</code></td>
+        <td>Iniciar sesión con usuario o email + contraseña. Devuelve nombre e ID del usuario.</td>
+        <td><code>{ identificador, password }</code></td>
+        <td class="auth-no">No</td>
+      </tr>
+      <tr>
+        <td><span class="method-post">POST</span></td>
+        <td><code>/api/auth/logout</code></td>
+        <td>Endpoint de cierre de sesión (la lógica real ocurre en el cliente).</td>
+        <td>—</td>
+        <td class="auth-no">No</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="subsection-title">Endpoints de Jugadores — <code>/api/jugadores</code></div>
+  <table>
+    <thead>
+      <tr>
+        <th>Método</th>
+        <th>Ruta</th>
+        <th>Descripción</th>
+        <th>Query Params</th>
+        <th>Auth</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="method-get">GET</span></td>
+        <td><code>/api/jugadores</code></td>
+        <td>Lista todos los jugadores ordenados por ranking FIP. Admite filtros opcionales de categoría y nacionalidad.</td>
+        <td><code>?categoria=MASCULINO</code><br><code>?nacionalidad=ESP</code><br><code>?limit=100</code></td>
+        <td class="auth-no">No</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="subsection-title">Endpoints de Administración — <code>/api/admin</code></div>
+  <table>
+    <thead>
+      <tr>
+        <th>Método</th>
+        <th>Ruta</th>
+        <th>Descripción</th>
+        <th>Respuesta</th>
+        <th>Auth</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="method-get">GET</span></td>
+        <td><code>/api/admin/sync-ranking-masculino</code></td>
+        <td>Descarga el PDF oficial del ranking FIP masculino, lo parsea e inserta/actualiza los jugadores en la base de datos.</td>
+        <td><code>{ ok, categoria, actualizados }</code></td>
+        <td class="auth-no">No *</td>
+      </tr>
+      <tr>
+        <td><span class="method-get">GET</span></td>
+        <td><code>/api/admin/sync-ranking-femenino</code></td>
+        <td>Igual que el anterior pero para el ranking femenino.</td>
+        <td><code>{ ok, categoria, actualizados }</code></td>
+        <td class="auth-no">No *</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout warning">
+    <div class="callout-title">* Endpoints de admin sin protección</div>
+    En la versión actual los endpoints de administración no requieren autenticación para simplificar el desarrollo. En producción se protegerían con Spring Security y un rol de ADMIN.
+  </div>
+
+  <div class="subsection-title">Ejemplos de Respuesta</div>
+
+  <p><strong>GET /api/jugadores</strong> — respuesta exitosa:</p>
+  <pre style="background:var(--bg-light);border:1px solid var(--border);padding:0.75rem;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;overflow:auto;">[
+  {
+    "idJugador": "coello-arturo",
+    "nombreCompleto": "Arturo Coello",
+    "nacionalidad": "ESP",
+    "manoDominante": "DERECHA",
+    "rankingFip": 1,
+    "puntos": 28700,
+    "categoria": "MASCULINO",
+    "posicionJuego": "REVES"
+  },
+  ...
+]</pre>
+
+  <p style="margin-top:0.75rem;"><strong>POST /api/auth/login</strong> — respuesta exitosa (200):</p>
+  <pre style="background:var(--bg-light);border:1px solid var(--border);padding:0.75rem;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;">{ "mensaje": "Login exitoso", "nombreUsuario": "alejandro", "idUsuario": 1 }</pre>
+
+  <p style="margin-top:0.75rem;"><strong>POST /api/auth/login</strong> — error (401):</p>
+  <pre style="background:#fef2f2;border:1px solid #fecaca;padding:0.75rem;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;">{ "error": "Credenciales incorrectas." }</pre>
+
+  <div class="doc-footer">
+    <span>PadelPro App — Documentación Técnica</span>
+    <span>Alejandro Ferrer · 2º DAM 2025/2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PÁGINA 4 — GUÍA DE DESPLIEGUE
+═══════════════════════════════════════════════════ -->
+<div class="page page-break">
+
+  <h2 class="section-title">D) Guía de Despliegue</h2>
+
+  <div class="subsection-title">Requisitos del Servidor</div>
+  <table>
+    <thead>
+      <tr><th>Componente</th><th>Requisito mínimo</th><th>Recomendado</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Sistema Operativo</td><td>Windows Server 2019 / Ubuntu 20.04 LTS</td><td>Ubuntu 22.04 LTS</td></tr>
+      <tr><td>JDK</td><td>Java 21 LTS</td><td>Java 21 LTS (OpenJDK)</td></tr>
+      <tr><td>RAM</td><td>512 MB</td><td>1 GB o más</td></tr>
+      <tr><td>Disco</td><td>200 MB libres</td><td>1 GB</td></tr>
+      <tr><td>Red</td><td>Puerto 8080 abierto</td><td>Proxy Nginx en puerto 80/443</td></tr>
+    </tbody>
+  </table>
+
+  <div class="subsection-title">Pasos de Instalación en Producción</div>
+
+  <p><strong>Paso 1 — Instalar Java 21 en Ubuntu:</strong></p>
+  <pre style="background:#1e293b;color:#e2e8f0;padding:0.75rem;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;">sudo apt update
+sudo apt install openjdk-21-jdk -y
+java -version   # Verificar instalación</pre>
+
+  <p style="margin-top:0.75rem;"><strong>Paso 2 — Clonar y compilar:</strong></p>
+  <pre style="background:#1e293b;color:#e2e8f0;padding:0.75rem;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;">git clone https://github.com/alejandroferrersfc-cell/padel-App.git
+cd padel-App
+chmod +x mvnw
+./mvnw clean package -DskipTests
+# El JAR se genera en: target/padel-backend-0.0.1-SNAPSHOT.jar</pre>
+
+  <p style="margin-top:0.75rem;"><strong>Paso 3 — Ejecutar el JAR:</strong></p>
+  <pre style="background:#1e293b;color:#e2e8f0;padding:0.75rem;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;">java -jar target/padel-backend-0.0.1-SNAPSHOT.jar
+# App disponible en http://&lt;IP-servidor&gt;:8080</pre>
+
+  <p style="margin-top:0.75rem;"><strong>Paso 4 (opcional) — Ejecutar como servicio systemd:</strong></p>
+  <pre style="background:#1e293b;color:#e2e8f0;padding:0.75rem;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;"># /etc/systemd/system/padelapp.service
+[Unit]
+Description=PadelPro App
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/padel-App
+ExecStart=java -jar target/padel-backend-0.0.1-SNAPSHOT.jar
+SuccessExitStatus=143
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target</pre>
+
+  <div class="subsection-title">Variables de Entorno Necesarias</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Variable / Propiedad</th>
+        <th>Valor por defecto</th>
+        <th>Descripción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>SERVER_PORT</code></td>
+        <td>8080</td>
+        <td>Puerto HTTP del servidor</td>
+      </tr>
+      <tr>
+        <td><code>SPRING_DATASOURCE_URL</code></td>
+        <td><code>jdbc:h2:mem:padeldb</code></td>
+        <td>URL de la base de datos</td>
+      </tr>
+      <tr>
+        <td><code>SPRING_DATASOURCE_USERNAME</code></td>
+        <td>sa</td>
+        <td>Usuario de la base de datos</td>
+      </tr>
+      <tr>
+        <td><code>SPRING_DATASOURCE_PASSWORD</code></td>
+        <td>(vacío)</td>
+        <td>Contraseña de la base de datos</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="subsection-title">Migración a Base de Datos Persistente (Producción)</div>
+  <p>
+    Para producción real se recomienda sustituir H2 por <strong>PostgreSQL</strong> o <strong>MySQL</strong>. Los pasos son:
+  </p>
+  <ol>
+    <li>Añadir dependencia <code>spring-boot-starter-data-jpa</code> + driver JDBC correspondiente al <code>pom.xml</code>.</li>
+    <li>Cambiar <code>spring.datasource.url</code> a <code>jdbc:postgresql://localhost:5432/padeldb</code>.</li>
+    <li>Cambiar <code>spring.jpa.hibernate.ddl-auto</code> de <code>create-drop</code> a <code>update</code> o gestionar migraciones con <strong>Flyway</strong>.</li>
+    <li>Configurar credenciales de producción como variables de entorno del servidor.</li>
+  </ol>
+
+  <div class="callout success">
+    <div class="callout-title">✅ Ventaja del diseño actual</div>
+    Al ser un JAR autocontenido (Tomcat + Frontend + API todo en uno), el despliegue es extremadamente sencillo: basta con copiar el JAR al servidor y ejecutarlo. No requiere nginx, node, ni ningún servidor adicional.
+  </div>
+
+  <div class="doc-footer">
+    <span>PadelPro App — Documentación Técnica</span>
+    <span>Alejandro Ferrer · 2º DAM 2025/2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PÁGINA 5 — PRUEBAS REALIZADAS
+═══════════════════════════════════════════════════ -->
+<div class="page page-break">
+
+  <h2 class="section-title">E) Pruebas Realizadas</h2>
+
+  <div class="subsection-title">Tipos de Pruebas</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Tipo</th>
+        <th>Herramienta</th>
+        <th>Cobertura</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Pruebas unitarias (backend)</td>
+        <td>JUnit 5 + Spring Boot Test</td>
+        <td>AuthService: registro, login correcto, login incorrecto, contraseña corta</td>
+      </tr>
+      <tr>
+        <td>Pruebas de integración (API)</td>
+        <td>MockMvc + @SpringBootTest</td>
+        <td>Endpoints /api/auth/register y /api/auth/login con respuestas HTTP verificadas</td>
+      </tr>
+      <tr>
+        <td>Pruebas manuales (frontend)</td>
+        <td>Chrome DevTools + navegador</td>
+        <td>Todas las secciones SPA: ranking, wordle, equipamiento, wishlist, en directo, reservas</td>
+      </tr>
+      <tr>
+        <td>Pruebas de geolocalización</td>
+        <td>Chrome — permisos manuales</td>
+        <td>Concesión y denegación de permisos, filtrado por radio, clubs locales</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="subsection-title">Cobertura Funcional</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Funcionalidad</th>
+        <th>Estado</th>
+        <th>Observaciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Registro de usuario</td>
+        <td class="test-result-ok">Verificado</td>
+        <td>Validaciones campo vacío, email inválido, contraseña corta</td>
+      </tr>
+      <tr>
+        <td>Login con usuario/email</td>
+        <td class="test-result-ok">Verificado</td>
+        <td>Sesión guardada en localStorage, restauración al recargar</td>
+      </tr>
+      <tr>
+        <td>Ranking con filtros</td>
+        <td class="test-result-ok">Verificado</td>
+        <td>Filtros de categoría, nacionalidad, mano y posición funcionan combinados</td>
+      </tr>
+      <tr>
+        <td>Sincronización FIP</td>
+        <td class="test-result-ok">Verificado</td>
+        <td>Masculino y femenino. Falla controlada si la URL del PDF cambia</td>
+      </tr>
+      <tr>
+        <td>Padel Wordle</td>
+        <td class="test-result-ok">Verificado</td>
+        <td>Colores correctos, teclado interactivo, palabra cambia cada día</td>
+      </tr>
+      <tr>
+        <td>Hotspots de equipamiento</td>
+        <td class="test-result-ok">Verificado</td>
+        <td>5 jugadores con hotspots, tooltips y añadir a wishlist</td>
+      </tr>
+      <tr>
+        <td>Wishlist (localStorage)</td>
+        <td class="test-result-ok">Verificado</td>
+        <td>Persistente mientras no se limpia el storage del navegador</td>
+      </tr>
+      <tr>
+        <td>Torneos en directo</td>
+        <td class="test-result-ok">Verificado</td>
+        <td>Banner activo, marcadores por sets, predicción IA con nivel de confianza</td>
+      </tr>
+      <tr>
+        <td>Reserva de pistas (radio)</td>
+        <td class="test-result-ok">Verificado</td>
+        <td>Slider 10-50 km, clubs reordenados por distancia al cambiar radio</td>
+      </tr>
+      <tr>
+        <td>Modal de reserva + toast</td>
+        <td class="test-result-ok">Verificado</td>
+        <td>Selector de hora, confirmación visual, animación de entrada</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="subsection-title">Bugs Encontrados y Resueltos</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Bug</th>
+        <th>Causa</th>
+        <th>Solución</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Congelación del navegador con >500 jugadores</td>
+        <td>Renderizado DOM sin virtualización</td>
+        <td>Límite de 400 jugadores renderizados + createDocumentFragment</td>
+      </tr>
+      <tr>
+        <td>Imágenes rotas en ranking</td>
+        <td>URL placeholder externa no disponible</td>
+        <td>Cambiado a placehold.co con fallback</td>
+      </tr>
+      <tr>
+        <td>Equipamiento no visible al cambiar de sección</td>
+        <td>Conflicto de scope de variables JS</td>
+        <td>Refactorización de equipment.js con namespacing</td>
+      </tr>
+      <tr>
+        <td>Sincronización FIP femenino fallaba</td>
+        <td>URL del PDF de la Federación Española cambiada</td>
+        <td>Actualizada la URL y añadido manejo de errores HTTP</td>
+      </tr>
+      <tr>
+        <td>Predicción IA lista sin jugadores cargados</td>
+        <td>Race condition entre ranking.js y live.js</td>
+        <td>Polling con setInterval + timeout de 3s como fallback</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="doc-footer">
+    <span>PadelPro App — Documentación Técnica · v1.0</span>
+    <span>Alejandro Ferrer · 2º DAM 2025/2026 · GitHub: alejandroferrersfc-cell/padel-App</span>
+  </div>
+</div>
+
+</body>
+</html>
