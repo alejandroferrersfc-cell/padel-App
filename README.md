@@ -7,6 +7,46 @@ Profesora: María Sierra Escalera Pérez
 
 ---
 
+## 🚀 EJECUCIÓN RÁPIDA (Solo requiere Java)
+
+> ⭐ **Para el evaluador / corrector** — Sigue estos 3 pasos y la aplicación estará funcionando en menos de 1 minuto.
+
+### Paso 1 — Clonar el repositorio
+```bash
+git clone https://github.com/alejandroferrersfc-cell/padel-App.git
+cd padel-App
+```
+
+### Paso 2 — Ejecutar el JAR precompilado
+> ✅ **No necesitas Maven, ni Node.js, ni ninguna herramienta adicional. Solo Java 17+.**
+
+**Windows (cmd o PowerShell):**
+```cmd
+java -jar target\padel-backend-0.0.1-SNAPSHOT.jar
+```
+
+**Linux / macOS:**
+```bash
+java -jar target/padel-backend-0.0.1-SNAPSHOT.jar
+```
+
+### Paso 3 — Abrir la aplicación en el navegador
+```
+http://localhost:8080
+```
+
+> ⏳ El servidor tarda **15-30 segundos** en arrancar. Cuando veas `Started PadelBackendApplication` en la terminal, ya puedes abrir el navegador.
+
+**Credenciales de prueba:**
+| Campo | Valor |
+|---|---|
+| Usuario | `demo` |
+| Contraseña | `demo123` |
+
+> Si el usuario demo no funciona, regístrate directamente en la app (tarda menos de 10 segundos).
+
+---
+
 ## 📋 Índice
 
 1. [Descripción del proyecto](#-descripción-del-proyecto)
@@ -68,15 +108,16 @@ Profesora: María Sierra Escalera Pérez
 
 ## ✅ Requisitos previos
 
-Antes de instalar el proyecto asegúrate de tener instalado:
-
-- **Java Development Kit (JDK) 21** o superior  
+**Para ejecución rápida con el JAR precompilado (recomendado):**
+- **Java 17+** (JDK o JRE)  
   Verifica con: `java -version`
-- **Maven 3.9+** (o usar el wrapper `mvnw` incluido en el proyecto)  
-  Verifica con: `mvn -version`
 - **Git** para clonar el repositorio  
   Verifica con: `git --version`
-- Navegador moderno con soporte para ES6 (Chrome 90+, Firefox 90+, Edge 90+)
+
+**Para compilar desde el código fuente (opcional):**
+- **Java Development Kit (JDK) 21** o superior
+- **Maven 3.9+** (o usar el wrapper `mvnw` incluido en el proyecto)  
+  Verifica con: `mvn -version`
 
 > **No se necesita** instalar Node.js, una base de datos externa, ni ningún servidor adicional. El servidor Tomcat y la base de datos H2 están embebidos en Spring Boot.
 
@@ -114,7 +155,41 @@ En **Linux / macOS**:
 
 ## ▶️ Ejecución
 
-### Modo desarrollo (recomendado)
+### Opción A — JAR precompilado ⭐ (más sencillo, solo necesita Java)
+
+El repositorio incluye el JAR ya compilado en `target/`. Solo ejecuta:
+
+**Windows:**
+```cmd
+java -jar target\padel-backend-0.0.1-SNAPSHOT.jar
+```
+
+**Linux / macOS:**
+```bash
+java -jar target/padel-backend-0.0.1-SNAPSHOT.jar
+```
+
+Una vez iniciado, abrir el navegador en:
+```
+http://localhost:8080
+```
+> ⏳ El servidor tarda **15-30 segundos** en arrancar completamente.
+
+### Opción B — Compilar desde el código fuente (requiere Maven)
+
+**Windows:**
+```cmd
+.\mvnw.cmd clean package -DskipTests
+java -jar target\padel-backend-0.0.1-SNAPSHOT.jar
+```
+
+**Linux / macOS:**
+```bash
+./mvnw clean package -DskipTests
+java -jar target/padel-backend-0.0.1-SNAPSHOT.jar
+```
+
+### Opción C — Modo desarrollo con hot-reload (requiere Maven)
 
 **Windows:**
 ```cmd
@@ -124,24 +199,6 @@ En **Linux / macOS**:
 **Linux / macOS:**
 ```bash
 ./mvnw spring-boot:run
-```
-
-Una vez iniciado, abrir el navegador en:
-
-```
-http://localhost:8080
-```
-
-El servidor tarda aproximadamente **15-30 segundos** en arrancar y poblar la base de datos con los jugadores iniciales.
-
-### Modo producción (JAR)
-
-```bash
-# Compilar JAR
-.\mvnw.cmd clean package -DskipTests
-
-# Ejecutar JAR
-java -jar target/padel-backend-0.0.1-SNAPSHOT.jar
 ```
 
 ---
