@@ -27,7 +27,7 @@ export function isSectionProtected(sectionId) {
     return PROTECTED_SECTIONS.includes(sectionId);
 }
 
-const API_BASE = 'http://localhost:8080/api/auth';
+const API_BASE = '/api/auth';
 
 async function apiRegister(nombreUsuario, email, password) {
     const res = await fetch(`${API_BASE}/register`, {

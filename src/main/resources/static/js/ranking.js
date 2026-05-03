@@ -12,10 +12,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (container) {
             container.innerHTML = '<div style="text-align: center; width: 100%; padding: 2rem;"><i class="fa-solid fa-spinner fa-spin fa-2x" style="color: var(--primary);"></i><p style="margin-top: 1rem; color: var(--text-sec);">Cargando jugadores...</p></div>';
         }
-        fetch('http://localhost:8080/api/jugadores')
-            .then(response => response.json())
+        fetch('/api/jugadores')
+            .then(response => {
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                return response.json();
+            })
             .then(data => {
-                playersData = data.map((p, index) => ({
+                if (!Array.isArray(data)) {
+                    console.error('Respuesta inesperada del servidor:', data);
+                    if (container) container.innerHTML = '<p style="color:var(--danger)">Error: respuesta inesperada del servidor.</p>';
+                    return;
+                }
+                playersData = data.map((p) => ({
                     id: p.rankingFip,
                     originalId: p.idJugador,
                     name: p.nombreCompleto,
@@ -105,41 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
         filterSide.addEventListener('change', applyFilters);
     }
 
-    function initSyncButtons() {
-        const btnMasculino = document.getElementById('btn-sync-masculino');
-        const btnFemenino = document.getElementById('btn-sync-femenino');
-
-        const handleSync = async (btn, endpoint) => {
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sincronizando...';
-            btn.disabled = true;
-
-            try {
-                const response = await fetch(endpoint);
-                if (response.ok) {
-                    const result = await response.json();
-                    fetchPlayers();
-                    alert(`¡Sincronización completada! Se actualizaron ${result.actualizados} jugadores.`);
-                } else {
-                    alert('Error al sincronizar con el FIP. Revisa el backend.');
-                }
-            } catch (error) {
-                console.error('Fetch error:', error);
-                alert('Error de red al conectar con el backend.');
-            } finally {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }
-        };
-
-        if (btnMasculino) {
-            btnMasculino.addEventListener('click', () => handleSync(btnMasculino, 'http://localhost:8080/api/admin/sync-ranking-masculino'));
-        }
-        if (btnFemenino) {
-            btnFemenino.addEventListener('click', () => handleSync(btnFemenino, 'http://localhost:8080/api/admin/sync-ranking-femenino'));
-        }
-    }
-
-    initSyncButtons();
     fetchPlayers();
 });
+

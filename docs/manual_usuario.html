@@ -1,456 +1,681 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Manual de Usuario — PadelPro App</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual de Usuario — PadelPro App</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-  :root {
-    --primary: #0ea5e9;
-    --primary-dark: #0369a1;
-    --accent: #10b981;
-    --text: #1e293b;
-    --text-sec: #475569;
-    --bg-light: #f8fafc;
-    --border: #e2e8f0;
-    --danger: #ef4444;
-    --warning: #f59e0b;
-  }
+    :root {
+      --primary: #0ea5e9;
+      --primary-dark: #0369a1;
+      --accent: #10b981;
+      --text: #1e293b;
+      --text-sec: #475569;
+      --bg-light: #f8fafc;
+      --border: #e2e8f0;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+    }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  body {
-    font-family: 'Inter', sans-serif;
-    color: var(--text);
-    background: white;
-    font-size: 10.5pt;
-    line-height: 1.65;
-  }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: white;
+      font-size: 10.5pt;
+      line-height: 1.65;
+    }
 
-  /* ─── COVER PAGE ─── */
-  .cover {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(160deg, #0f172a 0%, #1e3a5f 40%, #064e3b 100%);
-    color: white;
-    text-align: center;
-    padding: 4rem 2rem;
-    page-break-after: always;
-  }
-  .cover-logo { font-size: 5rem; margin-bottom: 1.5rem; }
-  .cover h1 {
-    font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem;
-    background: linear-gradient(90deg, #38bdf8, #34d399);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .cover h2 { font-size: 1.3rem; font-weight: 300; color: #94a3b8; margin-bottom: 0.5rem; }
-  .cover-subtitle { color: #64748b; font-size: 1rem; margin-bottom: 3rem; }
-  .cover-meta {
-    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 1rem; padding: 1.5rem 2.5rem; max-width: 500px; text-align: left;
-  }
-  .cover-meta p { margin-bottom: 0.4rem; font-size: 0.95rem; color: #cbd5e1; }
-  .cover-meta strong { color: #38bdf8; }
-  .cover-badge {
-    display: inline-block; background: linear-gradient(90deg, var(--primary), var(--accent));
-    color: white; padding: 0.5rem 1.25rem; border-radius: 20px;
-    font-size: 0.9rem; font-weight: 600; margin-top: 2rem;
-  }
+    /* ─── COVER PAGE ─── */
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(160deg, #0f172a 0%, #1e3a5f 40%, #064e3b 100%);
+      color: white;
+      text-align: center;
+      padding: 4rem 2rem;
+      page-break-after: always;
+    }
 
-  /* ─── PAGE ─── */
-  .page { max-width: 210mm; margin: 0 auto; padding: 20mm 18mm; }
-  .page-break { page-break-before: always; }
+    .cover-logo {
+      font-size: 5rem;
+      margin-bottom: 1.5rem;
+    }
 
-  /* ─── TITLES ─── */
-  .section-title {
-    font-size: 1.5rem; font-weight: 800; color: var(--primary-dark);
-    border-left: 4px solid var(--primary); padding-left: 0.75rem;
-    margin-bottom: 1.25rem; margin-top: 2rem;
-  }
-  .section-title:first-child { margin-top: 0; }
-  .subsection-title {
-    font-size: 1.05rem; font-weight: 700; color: var(--text);
-    margin-top: 1.5rem; margin-bottom: 0.75rem;
-    display: flex; align-items: center; gap: 0.5rem;
-  }
-  .subsection-title::before {
-    content: ''; display: inline-block;
-    width: 8px; height: 8px; background: var(--primary); border-radius: 50%;
-  }
+    .cover h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, #38bdf8, #34d399);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-  /* ─── SCREENSHOT CONTAINER ─── */
-  .screenshot-box {
-    margin: 1rem 0;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  }
-  .screenshot-box img {
-    width: 100%; display: block;
-  }
-  .screenshot-caption {
-    background: var(--bg-light); border-top: 1px solid var(--border);
-    padding: 0.4rem 0.75rem; font-size: 0.75rem;
-    color: var(--text-sec); font-style: italic;
-    display: flex; align-items: center; gap: 0.4rem;
-  }
+    .cover h2 {
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: #94a3b8;
+      margin-bottom: 0.5rem;
+    }
 
-  /* ─── STEPS ─── */
-  .steps { list-style: none; padding: 0; margin: 0.75rem 0; }
-  .step {
-    display: flex; gap: 1rem; align-items: flex-start;
-    margin-bottom: 0.75rem; padding: 0.75rem;
-    background: var(--bg-light); border-radius: 8px;
-    border: 1px solid var(--border);
-  }
-  .step-num {
-    background: var(--primary); color: white;
-    width: 28px; height: 28px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
-  }
-  .step-content { flex: 1; }
-  .step-title { font-weight: 600; margin-bottom: 0.2rem; }
-  .step-desc { font-size: 0.88rem; color: var(--text-sec); }
+    .cover-subtitle {
+      color: #64748b;
+      font-size: 1rem;
+      margin-bottom: 3rem;
+    }
 
-  /* ─── CALLOUT ─── */
-  .callout {
-    border-left: 4px solid var(--primary); background: #eff6ff;
-    padding: 0.75rem 1rem; border-radius: 0 8px 8px 0;
-    margin: 0.75rem 0; font-size: 0.9rem;
-  }
-  .callout.success { border-color: var(--accent); background: #ecfdf5; }
-  .callout.warning { border-color: var(--warning); background: #fffbeb; }
-  .callout.danger  { border-color: var(--danger);  background: #fef2f2; }
-  .callout-title { font-weight: 700; margin-bottom: 0.2rem; }
+    .cover-meta {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 1rem;
+      padding: 1.5rem 2.5rem;
+      max-width: 500px;
+      text-align: left;
+    }
 
-  /* ─── FAQ ─── */
-  .faq-item {
-    border: 1px solid var(--border); border-radius: 8px;
-    margin-bottom: 0.75rem; overflow: hidden;
-  }
-  .faq-q {
-    background: var(--bg-light); padding: 0.7rem 1rem;
-    font-weight: 600; font-size: 0.9rem;
-    display: flex; align-items: center; gap: 0.5rem;
-  }
-  .faq-q::before { content: '❓'; font-size: 0.85rem; }
-  .faq-a {
-    padding: 0.6rem 1rem; font-size: 0.88rem;
-    border-top: 1px solid var(--border); color: var(--text-sec);
-  }
+    .cover-meta p {
+      margin-bottom: 0.4rem;
+      font-size: 0.95rem;
+      color: #cbd5e1;
+    }
 
-  /* ─── FEATURE CARDS ─── */
-  .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 0.75rem 0; }
-  .feature-card {
-    background: var(--bg-light); border: 1px solid var(--border);
-    border-radius: 8px; padding: 0.75rem 1rem;
-    border-top: 3px solid var(--primary);
-  }
-  .feature-card-title { font-weight: 700; margin-bottom: 0.3rem; font-size: 0.95rem; }
-  .feature-card-desc  { font-size: 0.8rem; color: var(--text-sec); }
+    .cover-meta strong {
+      color: #38bdf8;
+    }
 
-  /* ─── HIGHLIGHT BOX ─── */
-  .highlight-box {
-    background: linear-gradient(135deg, #eff6ff, #ecfdf5);
-    border: 1px solid rgba(14,165,233,0.3); border-radius: 10px;
-    padding: 1rem 1.25rem; margin: 0.75rem 0;
-  }
+    .cover-badge {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: white;
+      padding: 0.5rem 1.25rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-top: 2rem;
+    }
 
-  /* ─── FOOTER ─── */
-  .doc-footer {
-    margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);
-    font-size: 0.75rem; color: var(--text-sec);
-    display: flex; justify-content: space-between;
-  }
+    /* ─── PAGE ─── */
+    .page {
+      max-width: 210mm;
+      margin: 0 auto;
+      padding: 20mm 18mm;
+    }
 
-  p { margin-bottom: 0.6rem; }
-  ul, ol { padding-left: 1.5rem; margin-bottom: 0.6rem; }
-  li { margin-bottom: 0.25rem; }
+    .page-break {
+      page-break-before: always;
+    }
 
-  /* ─── PRINT ─── */
-  .print-btn {
-    position: fixed; bottom: 2rem; right: 2rem;
-    background: var(--accent); color: white; border: none;
-    padding: 0.75rem 1.5rem; border-radius: 8px;
-    font-size: 1rem; font-weight: 600; cursor: pointer;
-    box-shadow: 0 4px 12px rgba(16,185,129,0.4); z-index: 999;
-  }
-  @media print { .no-print { display: none; } .cover { min-height: 100vh; } }
-</style>
+    /* ─── TITLES ─── */
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      border-left: 4px solid var(--primary);
+      padding-left: 0.75rem;
+      margin-bottom: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    .section-title:first-child {
+      margin-top: 0;
+    }
+
+    .subsection-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .subsection-title::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+
+    /* ─── SCREENSHOT CONTAINER ─── */
+    .screenshot-box {
+      margin: 1rem 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .screenshot-box img {
+      width: 100%;
+      display: block;
+    }
+
+    .screenshot-caption {
+      background: var(--bg-light);
+      border-top: 1px solid var(--border);
+      padding: 0.4rem 0.75rem;
+      font-size: 0.75rem;
+      color: var(--text-sec);
+      font-style: italic;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* ─── STEPS ─── */
+    .steps {
+      list-style: none;
+      padding: 0;
+      margin: 0.75rem 0;
+    }
+
+    .step {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+      padding: 0.75rem;
+      background: var(--bg-light);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .step-num {
+      background: var(--primary);
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .step-content {
+      flex: 1;
+    }
+
+    .step-title {
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .step-desc {
+      font-size: 0.88rem;
+      color: var(--text-sec);
+    }
+
+    /* ─── CALLOUT ─── */
+    .callout {
+      border-left: 4px solid var(--primary);
+      background: #eff6ff;
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      margin: 0.75rem 0;
+      font-size: 0.9rem;
+    }
+
+    .callout.success {
+      border-color: var(--accent);
+      background: #ecfdf5;
+    }
+
+    .callout.warning {
+      border-color: var(--warning);
+      background: #fffbeb;
+    }
+
+    .callout.danger {
+      border-color: var(--danger);
+      background: #fef2f2;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    /* ─── FAQ ─── */
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+    }
+
+    .faq-q {
+      background: var(--bg-light);
+      padding: 0.7rem 1rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .faq-q::before {
+      content: '❓';
+      font-size: 0.85rem;
+    }
+
+    .faq-a {
+      padding: 0.6rem 1rem;
+      font-size: 0.88rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-sec);
+    }
+
+    /* ─── FEATURE CARDS ─── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin: 0.75rem 0;
+    }
+
+    .feature-card {
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      border-top: 3px solid var(--primary);
+    }
+
+    .feature-card-title {
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      font-size: 0.95rem;
+    }
+
+    .feature-card-desc {
+      font-size: 0.8rem;
+      color: var(--text-sec);
+    }
+
+    /* ─── HIGHLIGHT BOX ─── */
+    .highlight-box {
+      background: linear-gradient(135deg, #eff6ff, #ecfdf5);
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin: 0.75rem 0;
+    }
+
+    /* ─── FOOTER ─── */
+    .doc-footer {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--text-sec);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    p {
+      margin-bottom: 0.6rem;
+    }
+
+    ul,
+    ol {
+      padding-left: 1.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    li {
+      margin-bottom: 0.25rem;
+    }
+
+    /* ─── PRINT ─── */
+    .print-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+      z-index: 999;
+    }
+
+    @media print {
+      .no-print {
+        display: none;
+      }
+
+      .cover {
+        min-height: 100vh;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<button class="print-btn no-print" onclick="window.print()">🖨️ Guardar como PDF</button>
+  <button class="print-btn no-print" onclick="window.print()">🖨️ Guardar como PDF</button>
 
-<!-- ═══════════════════════ PORTADA ═══════════════════════ -->
-<div class="cover">
-  <div class="cover-logo">🏓</div>
-  <h1>PadelPro App</h1>
-  <h2>Manual de Usuario</h2>
-  <p class="cover-subtitle">Guía completa para usar la aplicación</p>
-  <div class="cover-meta">
-    <p><strong>Versión:</strong> 1.0 — Abril 2026</p>
-    <p><strong>Proyecto:</strong> Proyecto Intermodular — 2º DAM</p>
-    <p><strong>Alumno:</strong> Alejandro Ferrer</p>
-    <p><strong>URL Local:</strong> http://localhost:8080</p>
-  </div>
-  <span class="cover-badge">🏆 Tu aplicación de pádel profesional</span>
-</div>
-
-<!-- ═══════════════════════ PÁGINA 1 ═══════════════════════ -->
-<div class="page">
-
-  <h2 class="section-title">1. Introducción</h2>
-
-  <p>
-    <strong>PadelPro App</strong> es una aplicación web diseñada para los aficionados y profesionales del pádel. Te permite consultar el ranking mundial FIP en tiempo real, seguir torneos en directo con predicciones de resultado, encontrar clubs de pádel cerca de ti, explorar el equipamiento de los mejores jugadores y mucho más.
-  </p>
-
-  <div class="feature-grid">
-    <div class="feature-card">
-      <div class="feature-card-title">🏆 Ranking Mundial</div>
-      <div class="feature-card-desc">Consulta el top mundial FIP masculino y femenino con filtros avanzados por nacionalidad, mano y posición.</div>
+  <!-- ═══════════════════════ PORTADA ═══════════════════════ -->
+  <div class="cover">
+    <div class="cover-logo">🏓</div>
+    <h1>PadelPro App</h1>
+    <h2>Manual de Usuario</h2>
+    <p class="cover-subtitle">Guía completa para usar la aplicación</p>
+    <div class="cover-meta">
+      <p><strong>Versión:</strong> 1.0 — Abril 2026</p>
+      <p><strong>Proyecto:</strong> Proyecto Intermodular — 2º DAM</p>
+      <p><strong>Alumno:</strong> Alejandro Ferrer</p>
+      <p><strong>URL Local:</strong> http://localhost:8080</p>
     </div>
-    <div class="feature-card">
-      <div class="feature-card-title">🔴 En Directo</div>
-      <div class="feature-card-desc">Sigue torneos activos, consulta marcadores por sets y obtén predicciones IA basadas en el ranking.</div>
+    <span class="cover-badge">🏆 Tu aplicación de pádel profesional</span>
+  </div>
+
+  <!-- ═══════════════════════ PÁGINA 1 ═══════════════════════ -->
+  <div class="page">
+
+    <h2 class="section-title">1. Introducción</h2>
+
+    <p>
+      <strong>PadelPro App</strong> es una aplicación web diseñada para los aficionados y profesionales del pádel. Te
+      permite consultar el ranking mundial FIP en tiempo real, seguir torneos en directo con predicciones de resultado,
+      encontrar clubs de pádel cerca de ti, explorar el equipamiento de los mejores jugadores y mucho más.
+    </p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-card-title">🏆 Ranking Mundial</div>
+        <div class="feature-card-desc">Consulta el top mundial FIP masculino y femenino con filtros avanzados por
+          nacionalidad, mano y posición.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title">🔴 En Directo</div>
+        <div class="feature-card-desc">Sigue torneos activos, consulta marcadores por sets y obtén predicciones IA
+          basadas en el ranking.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title">📍 Reservar Pista</div>
+        <div class="feature-card-desc">Encuentra clubs cerca de ti con geolocalización y radio de búsqueda ajustable de
+          10 a 50 km.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title">🎮 Padel Wordle</div>
+        <div class="feature-card-desc">Juego diario: adivina el apellido de un jugador del Top 20. La palabra cambia
+          cada día a medianoche.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title">👕 Equipamiento</div>
+        <div class="feature-card-desc">Explora qué llevan los pros con hotspots interactivos y guarda tus equipaciones
+          favoritas en tu wishlist.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title">❤️ Mi Wishlist</div>
+        <div class="feature-card-desc">Lista de deseos personal con el equipamiento que has marcado como favorito
+          durante la sesión.</div>
+      </div>
     </div>
-    <div class="feature-card">
-      <div class="feature-card-title">📍 Reservar Pista</div>
-      <div class="feature-card-desc">Encuentra clubs cerca de ti con geolocalización y radio de búsqueda ajustable de 10 a 50 km.</div>
+
+    <div class="callout">
+      <div class="callout-title">ℹ️ Requisitos</div>
+      Solo necesitas un navegador web moderno (Chrome, Firefox, Edge) y tener el servidor corriendo en tu máquina o
+      acceder a la URL donde esté desplegado.
     </div>
-    <div class="feature-card">
-      <div class="feature-card-title">🎮 Padel Wordle</div>
-      <div class="feature-card-desc">Juego diario: adivina el apellido de un jugador del Top 20. La palabra cambia cada día a medianoche.</div>
+
+    <h2 class="section-title">2. Primer Uso: Registro e Inicio de Sesión</h2>
+
+    <p>Al abrir la aplicación verás el panel de bienvenida. Puedes acceder de dos formas:</p>
+
+    <div class="screenshot-box">
+      <img src="screenshots/auth.png" alt="Modal de autenticación">
+      <div class="screenshot-caption">📸 Modal de autenticación — Login / Registro / Invitado</div>
     </div>
-    <div class="feature-card">
-      <div class="feature-card-title">👕 Equipamiento</div>
-      <div class="feature-card-desc">Explora qué llevan los pros con hotspots interactivos y guarda tus equipaciones favoritas en tu wishlist.</div>
+
+    <div class="subsection-title">Opciones de acceso</div>
+
+    <ol class="steps">
+      <li class="step">
+        <div class="step-num">A</div>
+        <div class="step-content">
+          <div class="step-title">Iniciar Sesión (cuenta existente)</div>
+          <div class="step-desc">Escribe tu nombre de usuario o email en el primer campo, tu contraseña y pulsa
+            <strong>"Entrar"</strong>.</div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">B</div>
+        <div class="step-content">
+          <div class="step-title">Crear nueva cuenta</div>
+          <div class="step-desc">Haz clic en la pestaña <strong>"Registrarse"</strong>, rellena nombre de usuario, email
+            y una contraseña de al menos 6 caracteres. Pulsa <strong>"Crear cuenta"</strong>. El sistema iniciará sesión
+            automáticamente.</div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">C</div>
+        <div class="step-content">
+          <div class="step-title">Continuar como invitado</div>
+          <div class="step-desc">Haz clic en <strong>"Continuar como invitado"</strong>. Podrás ver el Ranking mundial
+            pero las demás secciones requerirán cuenta.</div>
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout success">
+      <div class="callout-title">✅ Sesión persistente</div>
+      Una vez que inicies sesión, la app recordará tu cuenta aunque cierres el navegador. Para salir, usa el botón
+      <strong>"Salir"</strong> en la parte inferior del menú lateral.
     </div>
-    <div class="feature-card">
-      <div class="feature-card-title">❤️ Mi Wishlist</div>
-      <div class="feature-card-desc">Lista de deseos personal con el equipamiento que has marcado como favorito durante la sesión.</div>
+
+    <div class="doc-footer">
+      <span>PadelPro App — Manual de Usuario</span>
+      <span>Alejandro Ferrer · 2º DAM 2025/2026</span>
     </div>
   </div>
 
-  <div class="callout">
-    <div class="callout-title">ℹ️ Requisitos</div>
-    Solo necesitas un navegador web moderno (Chrome, Firefox, Edge) y tener el servidor corriendo en tu máquina o acceder a la URL donde esté desplegado.
-  </div>
+  <!-- ═══════════════════════ PÁGINA 2 ═══════════════════════ -->
+  <div class="page page-break">
 
-  <h2 class="section-title">2. Primer Uso: Registro e Inicio de Sesión</h2>
+    <h2 class="section-title">3. Funcionalidades Principales</h2>
 
-  <p>Al abrir la aplicación verás el panel de bienvenida. Puedes acceder de dos formas:</p>
+    <div class="subsection-title">🏆 Ranking Mundial</div>
+    <p>La sección de ranking muestra las tarjetas de todos los jugadores ordenados por su posición FIP. Puedes
+      filtrarlos usando los selectores en la barra superior.</p>
 
-  <div class="screenshot-box">
-    <img src="screenshots/auth.png" alt="Modal de autenticación">
-    <div class="screenshot-caption">📸 Modal de autenticación — Login / Registro / Invitado</div>
-  </div>
+    <div class="screenshot-box">
+      <img src="screenshots/ranking.png" alt="Ranking Mundial">
+      <div class="screenshot-caption">📸 Ranking Mundial — Tarjetas de jugadores con filtros activos</div>
+    </div>
 
-  <div class="subsection-title">Opciones de acceso</div>
-
-  <ol class="steps">
-    <li class="step">
-      <div class="step-num">A</div>
-      <div class="step-content">
-        <div class="step-title">Iniciar Sesión (cuenta existente)</div>
-        <div class="step-desc">Escribe tu nombre de usuario o email en el primer campo, tu contraseña y pulsa <strong>"Entrar"</strong>.</div>
-      </div>
-    </li>
-    <li class="step">
-      <div class="step-num">B</div>
-      <div class="step-content">
-        <div class="step-title">Crear nueva cuenta</div>
-        <div class="step-desc">Haz clic en la pestaña <strong>"Registrarse"</strong>, rellena nombre de usuario, email y una contraseña de al menos 6 caracteres. Pulsa <strong>"Crear cuenta"</strong>. El sistema iniciará sesión automáticamente.</div>
-      </div>
-    </li>
-    <li class="step">
-      <div class="step-num">C</div>
-      <div class="step-content">
-        <div class="step-title">Continuar como invitado</div>
-        <div class="step-desc">Haz clic en <strong>"Continuar como invitado"</strong>. Podrás ver el Ranking mundial pero las demás secciones requerirán cuenta.</div>
-      </div>
-    </li>
-  </ol>
-
-  <div class="callout success">
-    <div class="callout-title">✅ Sesión persistente</div>
-    Una vez que inicies sesión, la app recordará tu cuenta aunque cierres el navegador. Para salir, usa el botón <strong>"Salir"</strong> en la parte inferior del menú lateral.
-  </div>
-
-  <div class="doc-footer">
-    <span>PadelPro App — Manual de Usuario</span>
-    <span>Alejandro Ferrer · 2º DAM 2025/2026</span>
-  </div>
-</div>
-
-<!-- ═══════════════════════ PÁGINA 2 ═══════════════════════ -->
-<div class="page page-break">
-
-  <h2 class="section-title">3. Funcionalidades Principales</h2>
-
-  <div class="subsection-title">🏆 Ranking Mundial</div>
-  <p>La sección de ranking muestra las tarjetas de todos los jugadores ordenados por su posición FIP. Puedes filtrarlos usando los selectores en la barra superior.</p>
-
-  <div class="screenshot-box">
-    <img src="screenshots/ranking.png" alt="Ranking Mundial">
-    <div class="screenshot-caption">📸 Ranking Mundial — Tarjetas de jugadores con filtros activos</div>
-  </div>
-
-  <ul>
-    <li><strong>Categoría:</strong> alterna entre Ambas, Masculino o Femenino.</li>
-    <li><strong>Nacionalidad:</strong> filtra por país (ESP, ARG, BRA…).</li>
-    <li><strong>Mano Dominante:</strong> Diestro o Zurdo.</li>
-    <li><strong>Posición:</strong> Drive o Revés.</li>
-    <li><strong>Sync FIP:</strong> descarga el ranking oficial actualizado desde la FIP.</li>
-  </ul>
-
-  <div class="subsection-title">🔴 Torneos En Directo</div>
-  <p>Esta sección muestra los torneos activos, sus partidos y las predicciones de resultado basadas en los puntos del ranking de cada pareja.</p>
-
-  <div class="screenshot-box">
-    <img src="screenshots/live.png" alt="Torneos en directo">
-    <div class="screenshot-caption">📸 Sección En Directo — Banner de torneo, marcadores y predicción IA</div>
-  </div>
-
-  <ul>
-    <li>El banner superior indica el <strong>torneo activo</strong> y tiene un botón para ver el stream en YouTube.</li>
-    <li>Cada tarjeta de partido muestra el <strong>marcador por sets</strong> y el equipo favorito marcado con ⚡.</li>
-    <li>La <strong>Predicción IA</strong> indica el ganador más probable con nivel de confianza (ALTA / MEDIA / BAJA) basándose en la suma de puntos FIP de cada pareja.</li>
-    <li>El botón <strong>"Ver En Directo"</strong> abre el stream del partido en una nueva pestaña.</li>
-  </ul>
-
-  <div class="subsection-title">📍 Reservar Pista</div>
-  <p>Encuentra clubs de pádel cercanos usando la geolocalización de tu dispositivo.</p>
-
-  <div class="screenshot-box">
-    <img src="screenshots/booking.png" alt="Reservar Pista">
-    <div class="screenshot-caption">📸 Reservar Pista — Slider de radio y botón de geolocalización</div>
-  </div>
-
-  <ol class="steps">
-    <li class="step">
-      <div class="step-num">1</div>
-      <div class="step-content">
-        <div class="step-title">Ajusta el radio de búsqueda</div>
-        <div class="step-desc">Mueve el slider para elegir entre 10, 20, 30, 40 o 50 km. El valor actual se muestra en azul junto al label.</div>
-      </div>
-    </li>
-    <li class="step">
-      <div class="step-num">2</div>
-      <div class="step-content">
-        <div class="step-title">Comparte tu ubicación</div>
-        <div class="step-desc">Pulsa <strong>"Compartir mi ubicación"</strong> y acepta el permiso del navegador. Los clubs aparecerán ordenados por distancia.</div>
-      </div>
-    </li>
-    <li class="step">
-      <div class="step-num">3</div>
-      <div class="step-content">
-        <div class="step-title">Reserva una pista</div>
-        <div class="step-desc">Usa <strong>"Ver Mapa"</strong> para ver el club en Google Maps, o pulsa <strong>"Reservar"</strong>, elige hora y confirma. Verás un mensaje de confirmación en la esquina inferior derecha.</div>
-      </div>
-    </li>
-  </ol>
-
-  <div class="doc-footer">
-    <span>PadelPro App — Manual de Usuario</span>
-    <span>Alejandro Ferrer · 2º DAM 2025/2026</span>
-  </div>
-</div>
-
-<!-- ═══════════════════════ PÁGINA 3 ═══════════════════════ -->
-<div class="page page-break">
-
-  <div class="subsection-title">🎮 Padel Wordle Diario</div>
-  <p>Adivina el apellido de un jugador del Top 20 en 6 intentos. Las letras se colorean según si están en la posición correcta, presentes en otra posición o ausentes.</p>
-
-  <div class="screenshot-box">
-    <img src="screenshots/wordle.png" alt="Padel Wordle">
-    <div class="screenshot-caption">📸 Padel Wordle — Tablero en mitad de una partida con retroalimentación cromática</div>
-  </div>
-
-  <div class="highlight-box">
-    <strong>Cómo jugar:</strong>
-    <ul style="margin-top:0.4rem;">
-      <li>🟩 <strong>Verde</strong> — La letra está en la posición correcta.</li>
-      <li>🟨 <strong>Amarillo</strong> — La letra está en la palabra pero en otra posición.</li>
-      <li>⬛ <strong>Gris</strong> — La letra no aparece en la palabra.</li>
-      <li>Usa el teclado virtual o tu teclado físico. La palabra cambia cada día a medianoche.</li>
+    <ul>
+      <li><strong>Categoría:</strong> alterna entre Ambas, Masculino o Femenino.</li>
+      <li><strong>Nacionalidad:</strong> filtra por país (ESP, ARG, BRA…).</li>
+      <li><strong>Mano Dominante:</strong> Diestro o Zurdo.</li>
+      <li><strong>Posición:</strong> Drive o Revés.</li>
+      <li><strong>Sync FIP:</strong> descarga el ranking oficial actualizado desde la FIP.</li>
     </ul>
+
+    <div class="subsection-title">🔴 Torneos En Directo</div>
+    <p>Esta sección muestra los torneos activos, sus partidos y las predicciones de resultado basadas en los puntos del
+      ranking de cada pareja.</p>
+
+    <div class="screenshot-box">
+      <img src="screenshots/live.png" alt="Torneos en directo">
+      <div class="screenshot-caption">📸 Sección En Directo — Banner de torneo, marcadores y predicción IA</div>
+    </div>
+
+    <ul>
+      <li>El banner superior indica el <strong>torneo activo</strong> y tiene un botón para ver el stream en YouTube.
+      </li>
+      <li>Cada tarjeta de partido muestra el <strong>marcador por sets</strong> y el equipo favorito marcado con ⚡.</li>
+      <li>La <strong>Predicción IA</strong> indica el ganador más probable con nivel de confianza (ALTA / MEDIA / BAJA)
+        basándose en la suma de puntos FIP de cada pareja.</li>
+      <li>El botón <strong>"Ver En Directo"</strong> abre el stream del partido en una nueva pestaña.</li>
+    </ul>
+
+    <div class="subsection-title">📍 Reservar Pista</div>
+    <p>Encuentra clubs de pádel cercanos usando la geolocalización de tu dispositivo.</p>
+
+    <div class="screenshot-box">
+      <img src="screenshots/booking.png" alt="Reservar Pista">
+      <div class="screenshot-caption">📸 Reservar Pista — Slider de radio y botón de geolocalización</div>
+    </div>
+
+    <ol class="steps">
+      <li class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Ajusta el radio de búsqueda</div>
+          <div class="step-desc">Mueve el slider para elegir entre 10, 20, 30, 40 o 50 km. El valor actual se muestra en
+            azul junto al label.</div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Comparte tu ubicación</div>
+          <div class="step-desc">Pulsa <strong>"Compartir mi ubicación"</strong> y acepta el permiso del navegador. Los
+            clubs aparecerán ordenados por distancia.</div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Reserva una pista</div>
+          <div class="step-desc">Usa <strong>"Ver Mapa"</strong> para ver el club en Google Maps, o pulsa
+            <strong>"Reservar"</strong>, elige hora y confirma. Verás un mensaje de confirmación en la esquina inferior
+            derecha.</div>
+        </div>
+      </li>
+    </ol>
+
+    <div class="doc-footer">
+      <span>PadelPro App — Manual de Usuario</span>
+      <span>Alejandro Ferrer · 2º DAM 2025/2026</span>
+    </div>
   </div>
 
-  <div class="subsection-title">👕 Equipamiento Profesional</div>
-  <p>Explora lo que llevan los mejores jugadores del mundo con hotspots interactivos sobre sus fotos.</p>
+  <!-- ═══════════════════════ PÁGINA 3 ═══════════════════════ -->
+  <div class="page page-break">
 
-  <div class="screenshot-box">
-    <img src="screenshots/equipment.png" alt="Equipamiento">
-    <div class="screenshot-caption">📸 Equipamiento — Hotspots interactivos sobre las equipaciones de los pros</div>
-  </div>
+    <div class="subsection-title">🎮 Padel Wordle Diario</div>
+    <p>Adivina el apellido de un jugador del Top 20 en 6 intentos. Las letras se colorean según si están en la posición
+      correcta, presentes en otra posición o ausentes.</p>
 
-  <ul>
-    <li>Usa los <strong>botones de jugador</strong> en la parte superior para cambiar entre perfiles.</li>
-    <li>Haz clic o pasa el ratón sobre los <strong>puntos azules</strong> (hotspots) para ver el nombre y descripción de cada prenda.</li>
-    <li>Pulsa <strong>"Añadir a Wishlist"</strong> en el tooltip para guardar el ítem en tu lista de deseos.</li>
-    <li>Accede a tu wishlist desde el menú lateral <strong>"Mi Wishlist"</strong>.</li>
-  </ul>
+    <div class="screenshot-box">
+      <img src="screenshots/wordle.png" alt="Padel Wordle">
+      <div class="screenshot-caption">📸 Padel Wordle — Tablero en mitad de una partida con retroalimentación cromática
+      </div>
+    </div>
 
-  <h2 class="section-title">4. Preguntas Frecuentes (FAQ)</h2>
+    <div class="highlight-box">
+      <strong>Cómo jugar:</strong>
+      <ul style="margin-top:0.4rem;">
+        <li>🟩 <strong>Verde</strong> — La letra está en la posición correcta.</li>
+        <li>🟨 <strong>Amarillo</strong> — La letra está en la palabra pero en otra posición.</li>
+        <li>⬛ <strong>Gris</strong> — La letra no aparece en la palabra.</li>
+        <li>Usa el teclado virtual o tu teclado físico. La palabra cambia cada día a medianoche.</li>
+      </ul>
+    </div>
 
-  <div class="faq-item">
-    <div class="faq-q">¿Se pierden mis datos si cierro el navegador?</div>
-    <div class="faq-a">La sesión de usuario persiste en localStorage. Sin embargo, la base de datos es en memoria durante el desarrollo, así que los usuarios registrados se pierden al reiniciar el servidor. La wishlist también se guarda en localStorage del navegador.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">¿Por qué el ranking tarda en cargar?</div>
-    <div class="faq-a">El servidor Spring Boot tarda ~15-30 segundos en arrancar y poblar la base de datos. Si ves un spinner, espera un momento y la lista aparecerá automáticamente.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">¿Por qué no aparecen clubs al compartir mi ubicación?</div>
-    <div class="faq-a">Puede que el radio sea muy pequeño y no haya clubs simulados en esa distancia. Prueba a aumentar el slider a 50 km. También asegúrate de haber dado permiso de geolocalización en tu navegador.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">¿La Predicción IA del Wordle es correcta?</div>
-    <div class="faq-a">El Wordle no tiene IA. La palabra objetivo es el apellido de un jugador del Top 20 seleccionado según la fecha del día. La IA solo aplica en la sección "En Directo".</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">¿Por qué falla la sincronización FIP?</div>
-    <div class="faq-a">La sincronización descarga un PDF de la Federación Internacional de Pádel. Si la URL del PDF cambia en su web, la sincronización puede fallar. Los datos de la base de datos local seguirán disponibles.</div>
-  </div>
+    <div class="subsection-title">👕 Equipamiento Profesional</div>
+    <p>Explora lo que llevan los mejores jugadores del mundo con hotspots interactivos sobre sus fotos.</p>
 
-  <h2 class="section-title">5. Solución de Problemas Comunes</h2>
+    <div class="screenshot-box">
+      <img src="screenshots/equipment.png" alt="Equipamiento">
+      <div class="screenshot-caption">📸 Equipamiento — Hotspots interactivos sobre las equipaciones de los pros</div>
+    </div>
 
-  <div class="callout danger">
-    <div class="callout-title">🔴 El servidor no responde (página en blanco o error de conexión)</div>
-    El servidor Spring Boot no está corriendo. Ábrelo con <code>.\mvnw.cmd spring-boot:run</code> desde la carpeta del proyecto y espera 30 segundos.
-  </div>
+    <ul>
+      <li>Usa los <strong>botones de jugador</strong> en la parte superior para cambiar entre perfiles.</li>
+      <li>Haz clic o pasa el ratón sobre los <strong>puntos azules</strong> (hotspots) para ver el nombre y descripción
+        de cada prenda.</li>
+      <li>Pulsa <strong>"Añadir a Wishlist"</strong> en el tooltip para guardar el ítem en tu lista de deseos.</li>
+      <li>Accede a tu wishlist desde el menú lateral <strong>"Mi Wishlist"</strong>.</li>
+    </ul>
 
-  <div class="callout warning">
-    <div class="callout-title">⚠️ No puedo iniciar sesión con mis credenciales</div>
-    Si el servidor se reinició, los usuarios de la base de datos en memoria se habrán borrado. Regístrate de nuevo con el mismo usuario y contraseña. La sesión se guardará durante esta ejecución.
-  </div>
+    <h2 class="section-title">4. Preguntas Frecuentes (FAQ)</h2>
 
-  <div class="callout">
-    <div class="callout-title">ℹ️ Las secciones muestran un candado y no puedo entrar</div>
-    Debes iniciar sesión o crear una cuenta. La sección de Ranking es pública; el resto requiere autenticación. Haz clic en <strong>"Iniciar Sesión"</strong> en la parte inferior del menú lateral.
-  </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Se pierden mis datos si cierro el navegador?</div>
+      <div class="faq-a">La sesión de usuario persiste en localStorage. Sin embargo, la base de datos es en memoria
+        durante el desarrollo, así que los usuarios registrados se pierden al reiniciar el servidor. La wishlist también
+        se guarda en localStorage del navegador.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Por qué el ranking tarda en cargar?</div>
+      <div class="faq-a">El servidor Spring Boot tarda ~15-30 segundos en arrancar y poblar la base de datos. Si ves un
+        spinner, espera un momento y la lista aparecerá automáticamente.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Por qué no aparecen clubs al compartir mi ubicación?</div>
+      <div class="faq-a">Puede que el radio sea muy pequeño y no haya clubs simulados en esa distancia. Prueba a
+        aumentar el slider a 50 km. También asegúrate de haber dado permiso de geolocalización en tu navegador.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿La Predicción IA del Wordle es correcta?</div>
+      <div class="faq-a">El Wordle no tiene IA. La palabra objetivo es el apellido de un jugador del Top 20 seleccionado
+        según la fecha del día. La IA solo aplica en la sección "En Directo".</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Por qué falla la sincronización FIP?</div>
+      <div class="faq-a">La sincronización descarga un PDF de la Federación Internacional de Pádel. Si la URL del PDF
+        cambia en su web, la sincronización puede fallar. Los datos de la base de datos local seguirán disponibles.
+      </div>
+    </div>
 
-  <div class="callout success">
-    <div class="callout-title">✅ Credenciales de prueba</div>
-    Si el servidor acaba de arrancar, regístrate con cualquier usuario/contraseña. Si ya existe una sesión previa, usa el mismo par de credenciales con el que te registraste en esa sesión.
-  </div>
+    <h2 class="section-title">5. Solución de Problemas Comunes</h2>
 
-  <div class="doc-footer">
-    <span>PadelPro App — Manual de Usuario · v1.0</span>
-    <span>Alejandro Ferrer · 2º DAM 2025/2026 · github.com/alejandroferrersfc-cell/padel-App</span>
+    <div class="callout danger">
+      <div class="callout-title">🔴 El servidor no responde (página en blanco o error de conexión)</div>
+      El servidor Spring Boot no está corriendo. Ábrelo con <code>.\mvnw.cmd spring-boot:run</code> desde la carpeta del
+      proyecto y espera 30 segundos.
+    </div>
+
+    <div class="callout warning">
+      <div class="callout-title">⚠️ No puedo iniciar sesión con mis credenciales</div>
+      Si el servidor se reinició, los usuarios de la base de datos en memoria se habrán borrado. Regístrate de nuevo con
+      el mismo usuario y contraseña. La sesión se guardará durante esta ejecución.
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">ℹ️ Las secciones muestran un candado y no puedo entrar</div>
+      Debes iniciar sesión o crear una cuenta. La sección de Ranking es pública; el resto requiere autenticación. Haz
+      clic en <strong>"Iniciar Sesión"</strong> en la parte inferior del menú lateral.
+    </div>
+
+    <div class="callout success">
+      <div class="callout-title">✅ Credenciales de prueba</div>
+      Si el servidor acaba de arrancar, regístrate con cualquier usuario/contraseña. Si ya existe una sesión previa, usa
+      el mismo par de credenciales con el que te registraste en esa sesión.
+    </div>
+
+    <div class="doc-footer">
+      <span>PadelPro App — Manual de Usuario · v1.0</span>
+      <span>Alejandro Ferrer · 2º DAM 2025/2026 · github.com/alejandroferrersfc-cell/padel-App</span>
+    </div>
   </div>
-</div>
 
 </body>
+
 </html>
