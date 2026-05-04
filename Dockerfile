@@ -8,6 +8,7 @@ COPY mvnw pom.xml ./
 
 # Fix line endings for mvnw in case they are CRLF (Windows)
 RUN sed -i 's/\r$//' mvnw
+RUN chmod +x mvnw
 
 # Download dependencies offline (helps with caching)
 RUN ./mvnw dependency:go-offline
