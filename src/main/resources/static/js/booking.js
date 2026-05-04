@@ -77,6 +77,25 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     return R * c;
 }
 
+
+let serverBookings = [];
+
+async function loadServerBookings() {
+    const session = JSON.parse(localStorage.getItem('padel_session'));
+    if (!session) {
+        serverBookings = [];
+        return;
+    }
+    try {
+        const res = await fetch(/api/reservas?userId=);
+        if (res.ok) {
+            serverBookings = await res.json();
+        }
+    } catch (e) {
+        console.error("Error cargando reservas:", e);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const btnLocate   = document.getElementById('btn-locate');
     const container   = document.getElementById('clubs-container');
@@ -144,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /** Filtra clubs por radio seleccionado y renderiza */
-    function filterAndRender() {
+    async function filterAndRender() {
         const nearbyClubs = MOCK_CLUBS
             .map(club => ({ ...club, distance: getDistanceFromLatLonInKm(userLat, userLon, club.lat, club.lon) }))
             .filter(club => club.distance <= currentRadius)
@@ -157,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.reRenderClubs = filterAndRender;
 
     /** Renderiza las tarjetas de clubs en el contenedor */
-    function renderClubs(clubs) {
+    async function renderClubs(clubs) {
         if (clubs.length === 0) {
             container.innerHTML = `
                 <div class="no-clubs-msg">
@@ -168,14 +187,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const bookings = JSON.parse(localStorage.getItem('padel_bookings') || '[]');
+        await loadServerBookings();
 
         container.innerHTML = clubs.map(club => {
             const amenitiesHtml = club.amenities
                 .map(a => `<span class="amenity-tag"><i class="fa-solid fa-check"></i> ${a}</span>`)
                 .join('');
 
-            const clubBookings = bookings.filter(b => b.clubName === club.name).length;
+            const clubBookings = serverBookings.filter(b => b.clubName === club.name).length;
             const actualAvailable = Math.max(0, club.available - clubBookings);
 
             const availColor = actualAvailable > 0 ? 'var(--accent)' : 'var(--danger)';
@@ -306,9 +325,15 @@ function handleBooking(clubName, available) {
 /**
  * Confirma la reserva y muestra un mensaje de éxito.
  */
-function confirmBooking(clubName, date, time) {
+async function confirmBooking(clubName, date, time) {
     if (!date || !time) {
         alert("Por favor, selecciona una fecha y hora válidas.");
+        return;
+    }
+    
+    const session = JSON.parse(localStorage.getItem('padel_session'));
+    if (!session) {
+        alert("Debes iniciar sesión para reservar pistas.");
         return;
     }
 
@@ -379,14 +404,15 @@ function confirmBooking(clubName, date, time) {
 /**
  * Renderiza el historial de reservas en el DOM
  */
-function renderMyBookings() {
+async function renderMyBookings() {
     const section = document.getElementById('my-bookings-section');
     const list = document.getElementById('my-bookings-list');
     const count = document.getElementById('my-bookings-count');
     
     if (!section || !list || !count) return;
 
-    const bookings = JSON.parse(localStorage.getItem('padel_bookings') || '[]');
+    await loadServerBookings();
+    const bookings = serverBookings;
     count.textContent = bookings.length;
 
     if (bookings.length === 0) {
@@ -414,13 +440,15 @@ function renderMyBookings() {
 /**
  * Cancela (elimina) una reserva del historial
  */
-function cancelBooking(id) {
+async function cancelBooking(id) {
     if (!confirm('¿Estás seguro de que deseas cancelar esta reserva?')) return;
-    let bookings = JSON.parse(localStorage.getItem('padel_bookings') || '[]');
-    bookings = bookings.filter(b => b.id !== id);
-    localStorage.setItem('padel_bookings', JSON.stringify(bookings));
-    renderMyBookings();
-    if (typeof window.reRenderClubs === 'function') window.reRenderClubs();
+    try {
+        await fetch(/api/reservas/, { method: 'DELETE' });
+        await renderMyBookings();
+        if (typeof window.reRenderClubs === 'function') window.reRenderClubs();
+    } catch (e) {
+        console.error("Error al cancelar", e);
+    }
 }
 
 // Exponer globalmente para que funcionen los onclick del HTML dinámico
