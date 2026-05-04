@@ -86,6 +86,7 @@ http://localhost:8080
 | Spring Data JPA | 3.4.0 | ORM y acceso a base de datos |
 | Hibernate | 6.x | Implementación JPA |
 | H2 Database | 2.x | Base de datos en memoria (desarrollo) |
+| PostgreSQL | 15+ | Base de datos principal (producción en Aiven) |
 | Maven | 3.9.x | Gestión de dependencias y build |
 
 ### Frontend
@@ -283,13 +284,15 @@ La base de datos se puebla automáticamente al iniciar. Para probar el sistema d
 - [x] Enlace a Google Maps con coordenadas del club
 - [x] Modal de reserva avanzado con calendario (restringe fechas pasadas)
 - [x] Filtro inteligente de franjas horarias que bloquea horas pasadas para reservas en el día actual
+- [x] **Actualización dinámica de pistas disponibles** al realizar o cancelar reservas
+- [x] **Prevención de duplicados** en backend para evitar que un usuario reserve a la misma hora dos veces
 - [x] Toast de confirmación al reservar
 
 ### 📅 Mis Reservas
 - [x] Sección dedicada para consultar el historial de reservas activas del usuario
-- [x] Persistencia de datos en el cliente (`localStorage`)
+- [x] **Persistencia de datos en servidor** usando API REST, JPA y base de datos (antes *localStorage*)
 - [x] Visualización detallada de cada reserva (club, fecha, hora)
-- [x] Sistema de gestión para **cancelar reservas** existentes de forma dinámica
+- [x] Sistema de gestión para **cancelar reservas** existentes eliminándolas del servidor
 
 ### 🔐 Autenticación
 - [x] Registro de usuario con validación de campos
@@ -302,12 +305,10 @@ La base de datos se puebla automáticamente al iniciar. Para probar el sistema d
 
 ## 🚧 Funcionalidades pendientes
 
-- [ ] Reserva real de pistas en base de datos (actualmente en cliente vía `localStorage`)
 - [ ] Perfil de usuario editable (foto, preferencias)
 - [ ] Notificaciones push de torneos próximos
 - [ ] Modo claro / oscuro con selector
 - [ ] Soporte responsive completo para móvil
-- [ ] Despliegue en servidor en la nube (Render, Railway, etc.)
 
 ---
 
