@@ -253,6 +253,7 @@ La base de datos se puebla automáticamente al iniciar. Para probar el sistema d
 - [x] Teclado virtual interactivo con retroalimentación cromática
 - [x] Estados: correcto (verde), presente (amarillo), ausente (gris)
 - [x] Palabra diferente cada día (basada en fecha)
+- [x] Persistencia del estado del juego diario en el dispositivo
 
 ### 👕 Equipamiento Profesional
 - [x] Galería de 5 jugadores profesionales con sus equipaciones
@@ -270,6 +271,7 @@ La base de datos se puebla automáticamente al iniciar. Para probar el sistema d
 - [x] Banner prominente con enlace directo al stream del torneo
 - [x] Tarjetas de partidos con marcador por sets y tie-breaks (reglas oficiales)
 - [x] Estructura de torneo en fases (Previas, Octavos, Cuartos) basada en puntos de ranking
+- [x] Simulación dinámica de progreso de torneo y generación realista de puntajes en tiempo real
 - [x] Datos de partidos integrados con el Top 50 de parejas mundiales
 - [x] Badge animado "EN DIRECTO" para partidos en juego
 - [x] Estado de cada partido: en juego / finalizado / próximamente
