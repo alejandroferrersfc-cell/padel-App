@@ -152,6 +152,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         renderClubs(nearbyClubs);
     }
+    
+    // Exponemos la función para poder re-renderizar desde confirmBooking o cancelBooking
+    window.reRenderClubs = filterAndRender;
 
     /** Renderiza las tarjetas de clubs en el contenedor */
     function renderClubs(clubs) {
@@ -165,13 +168,18 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        const bookings = JSON.parse(localStorage.getItem('padel_bookings') || '[]');
+
         container.innerHTML = clubs.map(club => {
             const amenitiesHtml = club.amenities
                 .map(a => `<span class="amenity-tag"><i class="fa-solid fa-check"></i> ${a}</span>`)
                 .join('');
 
-            const availColor = club.available > 0 ? 'var(--accent)' : 'var(--danger)';
-            const availText  = club.available > 0 ? `${club.available} pista${club.available > 1 ? 's' : ''} disponible${club.available > 1 ? 's' : ''}` : 'Sin disponibilidad';
+            const clubBookings = bookings.filter(b => b.clubName === club.name).length;
+            const actualAvailable = Math.max(0, club.available - clubBookings);
+
+            const availColor = actualAvailable > 0 ? 'var(--accent)' : 'var(--danger)';
+            const availText  = actualAvailable > 0 ? `${actualAvailable} pista${actualAvailable > 1 ? 's' : ''} disponible${actualAvailable > 1 ? 's' : ''}` : 'Sin disponibilidad';
 
             // Enlace a Google Maps con las coordenadas del club
             const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${club.lat},${club.lon}`;
@@ -194,8 +202,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             <i class="fa-solid fa-map"></i> Ver Mapa
                         </a>
                         <button class="btn-primary"
-                            ${club.available === 0 ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}
-                            onclick="handleBooking('${club.name.replace(/'/g, "\\'")}', ${club.available})">
+                            ${actualAvailable === 0 ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}
+                            onclick="handleBooking('${club.name.replace(/'/g, "\\'")}', ${actualAvailable})">
                             <i class="fa-solid fa-calendar-check"></i> Reservar
                         </button>
                     </div>
@@ -335,6 +343,13 @@ function confirmBooking(clubName, date, time) {
     const [y, m, d] = date.split('-');
     const displayDate = `${d}/${m}/${y}`;
 
+    // Verificar si ya hay una reserva para la misma fecha y hora
+    const exists = bookings.find(b => b.date === displayDate && b.time === time);
+    if (exists) {
+        alert(`Ya tienes una reserva programada para el ${displayDate} a las ${time}.`);
+        return;
+    }
+
     const newBooking = {
         id: Date.now().toString(),
         clubName: clubName,
@@ -344,8 +359,9 @@ function confirmBooking(clubName, date, time) {
     bookings.push(newBooking);
     localStorage.setItem('padel_bookings', JSON.stringify(bookings));
 
-    // Refrescar UI de mis reservas
+    // Refrescar UI de mis reservas y lista de clubs
     if (typeof renderMyBookings === 'function') renderMyBookings();
+    if (typeof window.reRenderClubs === 'function') window.reRenderClubs();
 
     const toast = document.createElement('div');
     toast.style.cssText = `
@@ -404,6 +420,7 @@ function cancelBooking(id) {
     bookings = bookings.filter(b => b.id !== id);
     localStorage.setItem('padel_bookings', JSON.stringify(bookings));
     renderMyBookings();
+    if (typeof window.reRenderClubs === 'function') window.reRenderClubs();
 }
 
 // Exponer globalmente para que funcionen los onclick del HTML dinámico
