@@ -267,10 +267,12 @@ La base de datos se puebla automáticamente al iniciar. Para probar el sistema d
 ### 🔴 Torneos En Directo
 - [x] Detección automática de torneos activos según fecha
 - [x] Banner prominente con enlace directo al stream del torneo
-- [x] Tarjetas de partidos con marcador por sets
+- [x] Tarjetas de partidos con marcador por sets y tie-breaks (reglas oficiales)
+- [x] Estructura de torneo en fases (Previas, Octavos, Cuartos) basada en puntos de ranking
+- [x] Datos de partidos integrados con el Top 50 de parejas mundiales
 - [x] Badge animado "EN DIRECTO" para partidos en juego
 - [x] Estado de cada partido: en juego / finalizado / próximamente
-- [x] **Predicción IA** con nivel de confianza (alta/media/baja) basada en puntos del ranking
+- [x] **Predicción IA** precisa con nivel de confianza usando puntos de ranking reales por jugador
 - [x] Botón de redirección al stream o highlights
 
 ### 📍 Reservar Pista
@@ -279,8 +281,15 @@ La base de datos se puebla automáticamente al iniciar. Para probar el sistema d
 - [x] 13 clubs mock con información real: nombre, teléfono, comodidades, disponibilidad
 - [x] Filtrado y ordenación de clubs por distancia al usuario
 - [x] Enlace a Google Maps con coordenadas del club
-- [x] Modal de reserva con selector de franja horaria
+- [x] Modal de reserva avanzado con calendario (restringe fechas pasadas)
+- [x] Filtro inteligente de franjas horarias que bloquea horas pasadas para reservas en el día actual
 - [x] Toast de confirmación al reservar
+
+### 📅 Mis Reservas
+- [x] Sección dedicada para consultar el historial de reservas activas del usuario
+- [x] Persistencia de datos en el cliente (`localStorage`)
+- [x] Visualización detallada de cada reserva (club, fecha, hora)
+- [x] Sistema de gestión para **cancelar reservas** existentes de forma dinámica
 
 ### 🔐 Autenticación
 - [x] Registro de usuario con validación de campos
@@ -293,10 +302,9 @@ La base de datos se puebla automáticamente al iniciar. Para probar el sistema d
 
 ## 🚧 Funcionalidades pendientes
 
-- [ ] Reserva real de pistas en base de datos (actualmente mock)
+- [ ] Reserva real de pistas en base de datos (actualmente en cliente vía `localStorage`)
 - [ ] Perfil de usuario editable (foto, preferencias)
 - [ ] Notificaciones push de torneos próximos
-- [ ] Historial de reservas del usuario
 - [ ] Modo claro / oscuro con selector
 - [ ] Soporte responsive completo para móvil
 - [ ] Despliegue en servidor en la nube (Render, Railway, etc.)
