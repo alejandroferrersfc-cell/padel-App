@@ -544,6 +544,131 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ─── Render principal ─────────────────────────────────────────────────────
+
+    const NEXT_MATCH = {
+        "asu_pv1": { id: "asu_pvf1", slot: "team1" },
+        "asu_pv2": { id: "asu_pvf1", slot: "team2" },
+        "asu_pv3": { id: "asu_pvf2", slot: "team1" },
+        "asu_pv4": { id: "asu_pvf2", slot: "team2" },
+        "asu_pvf1": { id: "asu_r16_1", slot: "team2" },
+        "asu_pvf2": { id: "asu_r16_2", slot: "team2" },
+        "asu_r16_1": { id: "asu_qf1", slot: "team2" },
+        "asu_r16_2": { id: "asu_qf2", slot: "team2" },
+        "asu_r16_3": { id: "asu_qf3", slot: "team2" },
+        "asu_r16_4": { id: "asu_qf4", slot: "team2" },
+        "asu_qf1": { id: "asu_sf1", slot: "team1" },
+        "asu_qf2": { id: "asu_sf1", slot: "team2" },
+        "asu_qf3": { id: "asu_sf2", slot: "team1" },
+        "asu_qf4": { id: "asu_sf2", slot: "team2" },
+        "asu_sf1": { id: "asu_final", slot: "team1" },
+        "asu_sf2": { id: "asu_final", slot: "team2" }
+    };
+
+    function parseTime(scheduledStr) {
+        const months = { 'Ene':1,'Feb':2,'Mar':3,'Abr':4,'May':5,'Jun':6,'Jul':7,'Ago':8,'Sep':9,'Oct':10,'Nov':11,'Dic':12 };
+        const parts = scheduledStr.split(' ');
+        if (parts.length < 5) return new Date();
+        const day = parseInt(parts[1]);
+        const monthStr = parts[2];
+        const month = months[monthStr] || 5;
+        const timeStr = parts[4];
+        const [h, m] = timeStr.split(':').map(Number);
+        return new Date(2026, month - 1, day, h, m);
+    }
+
+    function prng(seedStr) {
+        let h = 0xdeadbeef;
+        for(let i=0; i<seedStr.length; i++) h = Math.imul(h ^ seedStr.charCodeAt(i), 2654435761);
+        return ((h ^ h >>> 16) >>> 0) / 4294967296;
+    }
+
+    function processBracket(tournament, players) {
+        const matches = TOURNAMENT_BRACKET[tournament.id];
+        if (!matches) return;
+
+        const matchMap = {};
+        matches.forEach(m => matchMap[m.id] = m);
+
+        // Process sequentially so early rounds propagate winners to later rounds
+        matches.forEach(match => {
+            const startTime = parseTime(match.scheduledTime);
+            const endTime = new Date(startTime.getTime() + 90 * 60000); // 90 min
+
+            if (!match.team1.players[0] || !match.team2.players[0] || match.team1.players[0].includes('Ganador') || match.team1.players[0].includes('Clasificado') || match.team2.players[0].includes('Ganador') || match.team2.players[0].includes('Clasificado')) {
+                match.status = 'upcoming';
+                match.winner = null;
+                match.sets = [];
+                match.currentSetScore = null;
+                match.currentGame = null;
+                return;
+            }
+
+            const p = prng(match.id);
+            const pred = getPrediction(match, players) || { favTeam: 'team1', conf: 'media' };
+            const favWins = p < 0.85;
+            const winner = favWins ? pred.favTeam : (pred.favTeam === 'team1' ? 'team2' : 'team1');
+            const loser = winner === 'team1' ? 'team2' : 'team1';
+
+            let sets = [];
+            const isStraightSets = prng(match.id + 'sets') < 0.65;
+
+            if (isStraightSets) {
+                sets.push({ [winner.replace('team','p')]: 6, [loser.replace('team','p')]: 4 - Math.floor(prng(match.id+'s1') * 3) });
+                sets.push({ [winner.replace('team','p')]: 6, [loser.replace('team','p')]: 4 - Math.floor(prng(match.id+'s2') * 3) });
+            } else {
+                sets.push({ [winner.replace('team','p')]: 6, [loser.replace('team','p')]: 4 - Math.floor(prng(match.id+'s1') * 3) });
+                sets.push({ [winner.replace('team','p')]: 4 - Math.floor(prng(match.id+'s2') * 3), [loser.replace('team','p')]: 6 });
+                sets.push({ [winner.replace('team','p')]: 6, [loser.replace('team','p')]: 4 - Math.floor(prng(match.id+'s3') * 3) });
+            }
+
+            const currentTime = new Date(); // Dynamic current time
+
+            if (currentTime < startTime) {
+                match.status = 'upcoming';
+                match.winner = null;
+                match.sets = [];
+                match.currentSetScore = null;
+                match.currentGame = null;
+            } else if (currentTime >= endTime) {
+                match.status = 'finished';
+                match.winner = winner;
+                match.sets = sets;
+                match.currentSetScore = null;
+                match.currentGame = null;
+                
+                const next = NEXT_MATCH[match.id];
+                if (next && matchMap[next.id]) {
+                    matchMap[next.id][next.slot] = { players: [...match[winner].players], pts: match[winner].pts };
+                }
+            } else {
+                match.status = 'live';
+                match.winner = null;
+                const progress = (currentTime - startTime) / (90 * 60000);
+                const numSets = sets.length;
+                const currentSetIndex = Math.floor(progress * numSets);
+                
+                match.sets = sets.slice(0, currentSetIndex);
+                
+                if (currentSetIndex < numSets) {
+                    const targetSet = sets[currentSetIndex];
+                    const setProgress = (progress * numSets) - currentSetIndex;
+                    match.currentSetScore = { 
+                        p1: Math.floor(targetSet.p1 * setProgress), 
+                        p2: Math.floor(targetSet.p2 * setProgress) 
+                    };
+                    const games = ['15', '30', '40', 'A'];
+                    match.currentGame = { 
+                        p1: games[Math.floor(prng(match.id+'g1'+currentTime.getMinutes()) * 4)], 
+                        p2: games[Math.floor(prng(match.id+'g2'+currentTime.getMinutes()) * 4)] 
+                    };
+                } else {
+                    match.currentSetScore = { p1: 0, p2: 0 };
+                    match.currentGame = { p1: '0', p2: '0' };
+                }
+            }
+        });
+    }
+
     function render(players) {
         const liveTournaments     = TOURNAMENTS.filter(isLive);
         const upcomingTournaments = TOURNAMENTS.filter(isUpcoming);
