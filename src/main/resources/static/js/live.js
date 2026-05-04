@@ -677,6 +677,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (liveTournaments.length > 0) {
             const t = liveTournaments[0];
+            processBracket(t, players);
             html += renderLiveBanner(t);
             html += `<div class="bracket-container">${renderBracket(t, players)}</div>`;
         } else {
