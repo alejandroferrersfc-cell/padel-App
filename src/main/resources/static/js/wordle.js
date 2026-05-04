@@ -4,7 +4,11 @@
 const WORD_LENGTH = 5;
 const MAX_GUESSES = 6;
 const POSSIBLE_WORDS = ["TAPIA", "GALAN", "TELLO", "NIETO", "CAPRA", "TRIAY", "SAINZ", "ARIAS"];
-const TARGET_WORD = POSSIBLE_WORDS[Math.floor(Math.random() * POSSIBLE_WORDS.length)];
+
+const todayStr = new Date().toDateString();
+let hash = 0;
+for (let i = 0; i < todayStr.length; i++) hash = Math.imul(hash ^ todayStr.charCodeAt(i), 2654435761);
+const TARGET_WORD = POSSIBLE_WORDS[((hash ^ hash >>> 16) >>> 0) % POSSIBLE_WORDS.length];
 
 const keyboardRows = [
     ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
@@ -23,7 +27,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!board || !keyboard) return;
 
     function initGame() {
-        // Load from local storage if needed (Skipped for brevity, can be added)
+        const savedState = JSON.parse(localStorage.getItem('padel_wordle_state') || '{}');
+        if (savedState.date === todayStr) {
+            guesses = savedState.guesses || [];
+            if (guesses.includes(TARGET_WORD) || guesses.length >= MAX_GUESSES) {
+                isGameOver = true;
+            }
+        } else {
+            guesses = [];
+            isGameOver = false;
+        }
+        
         renderBoard();
         renderKeyboard();
         
@@ -134,12 +148,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function submitGuess() {
         guesses.push(currentGuess);
         
+        localStorage.setItem('padel_wordle_state', JSON.stringify({
+            date: todayStr,
+            guesses: guesses
+        }));
+        
         if (currentGuess === TARGET_WORD) {
             isGameOver = true;
-            setTimeout(() => alert("¡Has acertado el Wordle de hoy!"), 300);
+            setTimeout(() => alert("¡Has acertado el Wordle de hoy! Vuelve mañana para jugar otra vez."), 300);
         } else if (guesses.length === MAX_GUESSES) {
             isGameOver = true;
-            setTimeout(() => alert("Has perdido. La respuesta era: " + TARGET_WORD), 300);
+            setTimeout(() => alert("Has perdido. La respuesta era: " + TARGET_WORD + ". Vuelve a intentarlo mañana."), 300);
         }
         
         currentGuess = "";
