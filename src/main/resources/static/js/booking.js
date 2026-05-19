@@ -88,7 +88,7 @@ async function loadServerBookings() {
     }
     try {
         // ✅ FIX 1: URL entre comillas (era /api/reservas?userId= sin comillas → SyntaxError)
-        const res = await fetch(`/api/reservas?userId=${session.id}`);
+        const res = await fetch(`/api/reservas?userId=${session.idUsuario}`);
         if (res.ok) {
             serverBookings = await res.json();
         }
@@ -360,7 +360,7 @@ async function confirmBooking(clubName, date, time) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                idUsuario: session.id,
+                idUsuario: session.idUsuario,
                 clubName:  clubName,
                 date:      displayDate,
                 time:      time
