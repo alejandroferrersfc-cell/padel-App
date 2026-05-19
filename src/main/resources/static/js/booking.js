@@ -87,7 +87,8 @@ async function loadServerBookings() {
         return;
     }
     try {
-        const res = await fetch(/api/reservas?userId=);
+        // ✅ FIX 1: URL entre comillas (era /api/reservas?userId= sin comillas → SyntaxError)
+        const res = await fetch(`/api/reservas?userId=${session.id}`);
         if (res.ok) {
             serverBookings = await res.json();
         }
@@ -233,8 +234,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /**
  * Muestra un modal de confirmación de reserva.
- * @param {string} clubName - Nombre del club
- * @param {number} available - Número de pistas disponibles
  */
 function handleBooking(clubName, available) {
     if (available === 0) return;
@@ -246,7 +245,6 @@ function handleBooking(clubName, available) {
         backdrop-filter: blur(4px); z-index: 9999;
         display: flex; align-items: center; justify-content: center;`;
 
-    // Fecha de hoy en formato YYYY-MM-DD adaptada a la zona horaria local
     const now = new Date();
     const todayStr = new Date(now.getTime() - (now.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
 
@@ -267,7 +265,6 @@ function handleBooking(clubName, available) {
             <select id="booking-time" style="width:100%;padding:0.75rem;border-radius:8px;
                 background:rgba(15,23,42,0.8);color:var(--text-primary);
                 border:1px solid var(--border-glass);font-size:1rem;margin-bottom:1.5rem;">
-                <!-- Opciones generadas dinámicamente -->
             </select>
             
             <div style="display:flex;gap:1rem;justify-content:center;">
@@ -296,16 +293,12 @@ function handleBooking(clubName, available) {
         
         let validTimes = times;
         
-        // Filtrar horas pasadas si la fecha es hoy
         if (selectedDate === todayStr) {
-            // Recalculamos el tiempo exacto actual cada vez que cambia
             const currentNow = new Date();
             const currentTimeVal = currentNow.getHours() + (currentNow.getMinutes() / 60);
-            
             validTimes = times.filter(t => {
                 const [h, m] = t.split(':').map(Number);
-                const timeVal = h + (m / 60);
-                return timeVal > currentTimeVal;
+                return (h + m / 60) > currentTimeVal;
             });
         }
         
@@ -319,11 +312,11 @@ function handleBooking(clubName, available) {
     }
 
     dateInput.addEventListener('change', updateTimeOptions);
-    updateTimeOptions(); // Inicializar opciones la primera vez
+    updateTimeOptions();
 }
 
 /**
- * Confirma la reserva y muestra un mensaje de éxito.
+ * Confirma la reserva contra la API del servidor.
  */
 async function confirmBooking(clubName, date, time) {
     if (!date || !time) {
@@ -337,7 +330,6 @@ async function confirmBooking(clubName, date, time) {
         return;
     }
 
-    // Validación estricta para evitar saltarse el calendario (por ejemplo escribiendo a mano)
     const now = new Date();
     const todayStr = new Date(now.getTime() - (now.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
 
@@ -346,14 +338,11 @@ async function confirmBooking(clubName, date, time) {
         return;
     }
 
-    // Si es hoy, validar que la hora no haya pasado
     if (date === todayStr) {
         const currentNow = new Date();
         const currentTimeVal = currentNow.getHours() + (currentNow.getMinutes() / 60);
         const [h, m] = time.split(':').map(Number);
-        const selectedTimeVal = h + (m / 60);
-        
-        if (selectedTimeVal <= currentTimeVal) {
+        if ((h + m / 60) <= currentTimeVal) {
             alert("Esa hora ya ha pasado, selecciona una hora válida.");
             return;
         }
@@ -361,30 +350,34 @@ async function confirmBooking(clubName, date, time) {
 
     document.getElementById('booking-modal-overlay')?.remove();
 
-    // Guardar reserva en localStorage
-    const bookings = JSON.parse(localStorage.getItem('padel_bookings') || '[]');
-    
-    // Formatear la fecha para que se vea mejor (de YYYY-MM-DD a DD/MM/YYYY)
-    const [y, m, d] = date.split('-');
-    const displayDate = `${d}/${m}/${y}`;
+    // Formatear fecha DD/MM/YYYY
+    const [y, mo, d] = date.split('-');
+    const displayDate = `${d}/${mo}/${y}`;
 
-    // Verificar si ya hay una reserva para la misma fecha y hora
-    const exists = bookings.find(b => b.date === displayDate && b.time === time);
-    if (exists) {
-        alert(`Ya tienes una reserva programada para el ${displayDate} a las ${time}.`);
+    try {
+        // ✅ POST a la API del servidor
+        const res = await fetch('/api/reservas', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                idUsuario: session.id,
+                clubName:  clubName,
+                date:      displayDate,
+                time:      time
+            })
+        });
+
+        if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            alert(err.error || `Ya tienes una reserva programada para el ${displayDate} a las ${time}.`);
+            return;
+        }
+    } catch (e) {
+        console.error("Error al guardar reserva:", e);
+        alert("Error de conexión al guardar la reserva.");
         return;
     }
 
-    const newBooking = {
-        id: Date.now().toString(),
-        clubName: clubName,
-        time: time,
-        date: displayDate
-    };
-    bookings.push(newBooking);
-    localStorage.setItem('padel_bookings', JSON.stringify(bookings));
-
-    // Refrescar UI de mis reservas y lista de clubs
     if (typeof renderMyBookings === 'function') renderMyBookings();
     if (typeof window.reRenderClubs === 'function') window.reRenderClubs();
 
@@ -397,17 +390,16 @@ async function confirmBooking(clubName, date, time) {
         animation: slideInToast 0.4s ease;`;
     toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> ¡Reserva confirmada el ${displayDate} a las ${time}!`;
     document.body.appendChild(toast);
-
     setTimeout(() => toast.remove(), 4000);
 }
 
 /**
- * Renderiza el historial de reservas en el DOM
+ * Renderiza el historial de reservas en el DOM.
  */
 async function renderMyBookings() {
     const section = document.getElementById('my-bookings-section');
-    const list = document.getElementById('my-bookings-list');
-    const count = document.getElementById('my-bookings-count');
+    const list    = document.getElementById('my-bookings-list');
+    const count   = document.getElementById('my-bookings-count');
     
     if (!section || !list || !count) return;
 
@@ -424,7 +416,9 @@ async function renderMyBookings() {
     list.innerHTML = bookings.map(b => `
         <div class="glass-panel" style="display:flex; justify-content:space-between; align-items:center; padding:1.2rem; border-left: 4px solid var(--primary);">
             <div>
-                <h3 style="color:var(--text-primary); margin:0 0 0.4rem 0; font-size:1.1rem;"><i class="fa-solid fa-map-pin" style="color:var(--primary);"></i> ${b.clubName}</h3>
+                <h3 style="color:var(--text-primary); margin:0 0 0.4rem 0; font-size:1.1rem;">
+                    <i class="fa-solid fa-map-pin" style="color:var(--primary);"></i> ${b.clubName}
+                </h3>
                 <p style="margin:0; font-size:0.9rem; color:var(--text-sec);">
                     <i class="fa-regular fa-calendar"></i> Reservado: ${b.date} &nbsp;|&nbsp; 
                     <i class="fa-regular fa-clock"></i> Hora de juego: <strong style="color:var(--accent);">${b.time}</strong>
@@ -438,12 +432,13 @@ async function renderMyBookings() {
 }
 
 /**
- * Cancela (elimina) una reserva del historial
+ * Cancela una reserva en el servidor.
  */
 async function cancelBooking(id) {
     if (!confirm('¿Estás seguro de que deseas cancelar esta reserva?')) return;
     try {
-        await fetch(/api/reservas/, { method: 'DELETE' });
+        // ✅ FIX 2: URL entre comillas con el id incluido (era /api/reservas/ sin comillas → SyntaxError)
+        await fetch(`/api/reservas/${id}`, { method: 'DELETE' });
         await renderMyBookings();
         if (typeof window.reRenderClubs === 'function') window.reRenderClubs();
     } catch (e) {
